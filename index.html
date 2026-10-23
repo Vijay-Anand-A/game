@@ -1,1 +1,301 @@
-<h1>Welcome Chess Game</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form - Vallal's Trophy 2026</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .form-container {
+            background-color: #d1d5db;
+            width: 800px;
+            padding: 40px;
+            border: 2px solid #000;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            width: 80px;
+            height: 80px;
+            background-color: #ccc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            text-align: center;
+        }
+        .title-section h2 {
+            margin: 0;
+            font-size: 18px;
+            text-decoration: underline;
+        }
+        .title-section h1 {
+            margin: 5px 0;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .organized-by {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        .school-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        .address {
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        .double-line {
+            border-top: 3px double #000;
+            margin: 10px 0;
+        }
+        .form-title {
+            text-align: center;
+            font-weight: bold;
+            text-decoration: underline;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: flex-start;
+        }
+        .label {
+            width: 200px;
+            font-weight: normal;
+        }
+        .colon {
+            width: 20px;
+        }
+        .input-field {
+            flex-grow: 1;
+            border-bottom: 2px solid #000;
+            min-height: 25px;
+        }
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 16px;
+            outline: none;
+        }
+        .address-lines {
+            flex-grow: 1;
+        }
+        .address-line {
+            border-bottom: 2px solid #000;
+            height: 25px;
+            margin-bottom: 5px;
+        }
+        .category-options {
+            display: flex;
+            gap: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #e5e7eb;
+        }
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 60px;
+        }
+        .sig-box {
+            text-align: center;
+            width: 200px;
+        }
+        .sig-line {
+            border-top: 1px solid #000;
+            margin-bottom: 10px;
+        }
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+        }
+        button {
+            padding: 10px 30px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            color: white;
+        }
+        .btn-send { background-color: #059669; }
+        .btn-download { background-color: #2563eb; }
+
+        @media print {
+            .buttons { display: none; }
+            body { background-color: white; padding: 0; }
+            .form-container { box-shadow: none; border: 2px solid #000; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container" id="printable-form">
+        <div class="header">
+            <div class="header-top">
+                <div class="logo">LOGO 1</div>
+                <div class="title-section">
+                    <h2>STATE LEVEL CBSE SCHOOL SPORTS AND GAMES TOURNAMENT</h2>
+                    <h1>VALLAL'S TROPHY – 2026</h1>
+                    <div class="organized-by">ORGANIZED BY</div>
+                    <div class="school-name">V.V.N.K.M. SR. SEC. SCHOOL</div>
+                    <div class="address">No.58, DKM College Road, Sainathapuram, Vellore-632001</div>
+                </div>
+                <div class="logo">LOGO 2</div>
+            </div>
+            <div class="double-line"></div>
+            <div class="form-title">REGISTRATION FORM – TABLE TENNIS</div>
+        </div>
+
+        <div class="input-group">
+            <div class="label">School Name & Address</div>
+            <div class="colon">:</div>
+            <div class="address-lines">
+                <div class="address-line"><input type="text"></div>
+                <div class="address-line"><input type="text"></div>
+                <div class="address-line"><input type="text"></div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <div class="label">Category (tick)</div>
+            <div class="colon">:</div>
+            <div class="input-field">
+                <div class="category-options">
+                    <label><input type="checkbox"> Under – 14</label>
+                    <label><input type="checkbox"> 17</label>
+                    <label><input type="checkbox"> 19</label>
+                    <label><input type="checkbox"> Boys</label>
+                    <label><input type="checkbox"> Girls</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <div class="label">E-Mail ID of the school</div>
+            <div class="colon">:</div>
+            <div class="input-field"><input type="email"></div>
+        </div>
+
+        <div class="input-group">
+            <div class="label">Name of the Principal</div>
+            <div class="colon">:</div>
+            <div class="input-field"><input type="text"></div>
+        </div>
+
+        <div class="input-group">
+            <div class="label">Contact Number</div>
+            <div class="colon">:</div>
+            <div class="input-field"><input type="text"></div>
+        </div>
+
+        <div class="input-group">
+            <div class="label">Name of the P.D/P.E.T/ Coach</div>
+            <div class="colon">:</div>
+            <div class="input-field"><input type="text"></div>
+        </div>
+
+        <div class="input-group">
+            <div class="label">Contact Number</div>
+            <div class="colon">:</div>
+            <div class="input-field"><input type="text"></div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 50px;">S. No</th>
+                    <th>Participants Name</th>
+                    <th style="width: 100px;">Class & Sec</th>
+                    <th style="width: 150px;">Date of Birth</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="3">Boys</td>
+                    <td>1. <input type="text" style="width: 80%;"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td>2. <input type="text" style="width: 80%;"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td>3. <input type="text" style="width: 80%;"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td rowspan="3">Girls</td>
+                    <td>1. <input type="text" style="width: 80%;"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td>2. <input type="text" style="width: 80%;"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td>3. <input type="text" style="width: 80%;"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="signature-section">
+            <div class="sig-box">
+                <div class="sig-line"></div>
+                <strong>P.D. / PET Signature</strong>
+            </div>
+            <div class="sig-box">
+                <div class="sig-line"></div>
+                <strong>Principal Signature</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button class="btn-send" onclick="alert('Form Sent!')">Send</button>
+        <button class="btn-download" onclick="window.print()">Download</button>
+    </div>
+
+</body>
+</html>
+
