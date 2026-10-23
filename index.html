@@ -109,9 +109,23 @@
             height: 25px;
             margin-bottom: 5px;
         }
-        .category-options {
+        .category-container {
             display: flex;
+            align-items: center;
+            flex-wrap: wrap;
             gap: 15px;
+            padding: 5px 0;
+        }
+        .category-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: bold;
+        }
+        .category-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
         }
         table {
             width: 100%;
@@ -194,9 +208,17 @@
         <div class="input-group">
             <div class="label">Category (tick)</div>
             <div class="colon">:</div>
-            <div class="input-field" style="display: flex; align-items: center; border-bottom: 2px solid #000;">
-                <span style="font-weight: bold; margin-right: 10px;">Under – 14, 17, 19, Boys / Girls</span>
-                <input type="text" style="flex-grow: 1;">
+            <div class="input-field" style="border-bottom: 2px solid #000;">
+                <div class="category-container">
+                    <span style="font-weight: bold;">Under –</span>
+                    <label class="category-item"><input type="checkbox"> 14</label>
+                    <label class="category-item"><input type="checkbox"> 17</label>
+                    <label class="category-item"><input type="checkbox"> 19</label>
+                    <span style="margin: 0 5px;">,</span>
+                    <label class="category-item"><input type="checkbox"> Boys</label>
+                    <span style="margin: 0 2px;">/</span>
+                    <label class="category-item"><input type="checkbox"> Girls</label>
+                </div>
             </div>
         </div>
 
