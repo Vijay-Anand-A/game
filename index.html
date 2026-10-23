@@ -216,7 +216,7 @@
         .btn-download { background-color: #1565c0; }
 
         @media (max-width: 600px) {
-            .form-content {\ padding: 20px; }
+            .form-content { padding: 20px; }
             .input-group { flex-direction: column; align-items: stretch; }
             .label { width: 100%; margin-bottom: 5px; }
             .colon { display: none; }
@@ -255,9 +255,9 @@
                 <div class="label">School Name & Address</div>
                 <div class="colon">:</div>
                 <div class="address-field">
-                    <div class="address-line"><input type="text"></div>
-                    <div class="address-line"><input type="text"></div>
-                    <div class="address-line"><input type="text"></div>
+                    <div class="address-line"><input type="text" id="schoolAddress1"></div>
+                    <div class="address-line"><input type="text" id="schoolAddress2"></div>
+                    <div class="address-line"><input type="text" id="schoolAddress3"></div>
                 </div>
             </div>
 
@@ -275,31 +275,31 @@
             <div class="input-group">
                 <div class="label">E-Mail ID of the school</div>
                 <div class="colon">:</div>
-                <div class="input-field"><input type="email"></div>
+                <div class="input-field"><input type="email" id="schoolEmail"></div>
             </div>
 
             <div class="input-group">
                 <div class="label">Name of the Principal</div>
                 <div class="colon">:</div>
-                <div class="input-field"><input type="text"></div>
+                <div class="input-field"><input type="text" id="principalName"></div>
             </div>
 
             <div class="input-group">
                 <div class="label">Contact Number</div>
                 <div class="colon">:</div>
-                <div class="input-field"><input type="text"></div>
+                <div class="input-field"><input type="text" id="principalContact"></div>
             </div>
 
             <div class="input-group">
                 <div class="label">Name of the P.D/P.E.T/ Coach</div>
                 <div class="colon">:</div>
-                <div class="input-field"><input type="text"></div>
+                <div class="input-field"><input type="text" id="coachName"></div>
             </div>
 
             <div class="input-group">
                 <div class="label">Contact Number</div>
                 <div class="colon">:</div>
-                <div class="input-field"><input type="text"></div>
+                <div class="input-field"><input type="text" id="coachContact"></div>
             </div>
 
             <div class="table-responsive">
@@ -382,9 +382,91 @@
     </div>
 
     <div class="buttons">
-        <button class="btn-send" onclick="alert('Form Sent!')">Send</button>
+        <button class="btn-send" id="sendBtn">Send</button>
         <button class="btn-download" onclick="window.print()">Download</button>
     </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDHup4M5P3z-fy9fVRElBx0hutREWZGSAM",
+            authDomain: "anandhavruksham-3aa36.firebaseapp.com",
+            projectId: "anandhavruksham-3aa36",
+            storageBucket: "anandhavruksham-3aa36.firebasestorage.app",
+            messagingSenderId: "604117717957",
+            appId: "1:604117717957:web:3df03ca1c702dba99331ac"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const sendBtn = document.getElementById('sendBtn');
+
+        sendBtn.addEventListener('click', async () => {
+            const categories = [];
+            document.querySelectorAll('.category-item').forEach(item => {
+                if (item.querySelector('input').checked) {
+                    categories.push(item.innerText.trim());
+                }
+            });
+
+            const participants = [];
+            document.querySelectorAll('.table-responsive tbody tr').forEach(row => {
+                const cells = row.children;
+                const name = cells[1].querySelector('input').value.trim();
+                const isBoy = cells[2].querySelector('input').checked;
+                const isGirl = cells[3].querySelector('input').checked;
+                const classSec = cells[4].querySelector('input').value.trim();
+                const dob = cells[5].querySelector('input').value.trim();
+                if (name || classSec || dob) {
+                    participants.push({
+                        slno: parseInt(cells[0].innerText.trim(), 10),
+                        name: name,
+                        gender: isBoy ? 'Boy' : (isGirl ? 'Girl' : ''),
+                        classSec: classSec,
+                        dob: dob
+                    });
+                }
+            });
+
+            const schoolAddress = [
+                document.getElementById('schoolAddress1').value.trim(),
+                document.getElementById('schoolAddress2').value.trim(),
+                document.getElementById('schoolAddress3').value.trim()
+            ].filter(Boolean).join(', ');
+
+            const data = {
+                schoolNameAddress: schoolAddress,
+                categories: categories,
+                schoolEmail: document.getElementById('schoolEmail').value.trim(),
+                principalName: document.getElementById('principalName').value.trim(),
+                principalContact: document.getElementById('principalContact').value.trim(),
+                coachName: document.getElementById('coachName').value.trim(),
+                coachContact: document.getElementById('coachContact').value.trim(),
+                participants: participants,
+                createdAt: serverTimestamp()
+            };
+
+            sendBtn.disabled = true;
+            sendBtn.innerText = 'Sending...';
+
+            try {
+                await addDoc(collection(db, 'game_reg'), data);
+                alert('Registration submitted successfully!');
+                document.getElementById('printable-form').querySelectorAll('input').forEach(input => {
+                    if (input.type === 'checkbox') { input.checked = false; } else { input.value = ''; }
+                });
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to submit. Please try again.');
+            } finally {
+                sendBtn.disabled = false;
+                sendBtn.innerText = 'Send';
+            }
+        });
+    </script>
 
 </body>
 </html>
