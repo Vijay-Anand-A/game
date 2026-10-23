@@ -34,13 +34,14 @@
         .logo {
             width: 80px;
             height: 80px;
-            background-color: #ccc;
-            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
-            text-align: center;
+        }
+        .logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
         .title-section h2 {
             margin: 0;
@@ -162,11 +163,11 @@
     </style>
 </head>
 <body>
-
+    <div style="text-align: center; width: 800px; margin-bottom: 5px;">6</div>
     <div class="form-container" id="printable-form">
         <div class="header">
             <div class="header-top">
-                <div class="logo">LOGO 1</div>
+                <div class="logo"><img src="img/left_logo.png" alt="Left Logo"></div>
                 <div class="title-section">
                     <h2>STATE LEVEL CBSE SCHOOL SPORTS AND GAMES TOURNAMENT</h2>
                     <h1>VALLAL'S TROPHY – 2026</h1>
@@ -174,7 +175,7 @@
                     <div class="school-name">V.V.N.K.M. SR. SEC. SCHOOL</div>
                     <div class="address">No.58, DKM College Road, Sainathapuram, Vellore-632001</div>
                 </div>
-                <div class="logo">LOGO 2</div>
+                <div class="logo"><img src="img/right_logo.png" alt="Right Logo"></div>
             </div>
             <div class="double-line"></div>
             <div class="form-title">REGISTRATION FORM – TABLE TENNIS</div>
@@ -193,14 +194,9 @@
         <div class="input-group">
             <div class="label">Category (tick)</div>
             <div class="colon">:</div>
-            <div class="input-field">
-                <div class="category-options">
-                    <label><input type="checkbox"> Under – 14</label>
-                    <label><input type="checkbox"> 17</label>
-                    <label><input type="checkbox"> 19</label>
-                    <label><input type="checkbox"> Boys</label>
-                    <label><input type="checkbox"> Girls</label>
-                </div>
+            <div class="input-field" style="display: flex; align-items: center; border-bottom: 2px solid #000;">
+                <span style="font-weight: bold; margin-right: 10px;">Under – 14, 17, 19, Boys / Girls</span>
+                <input type="text" style="flex-grow: 1;">
             </div>
         </div>
 
@@ -237,42 +233,48 @@
         <table>
             <thead>
                 <tr>
-                    <th style="width: 50px;">S. No</th>
+                    <th colspan="2">S. No</th>
                     <th>Participants Name</th>
-                    <th style="width: 100px;">Class & Sec</th>
-                    <th style="width: 150px;">Date of Birth</th>
+                    <th>Class & Sec</th>
+                    <th>Date of Birth</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td rowspan="3">Boys</td>
-                    <td>1. <input type="text" style="width: 80%;"></td>
+                    <td rowspan="3" style="width: 60px; font-weight: bold;">Boys</td>
+                    <td style="width: 30px;">1.</td>
+                    <td><input type="text"></td>
+                    <td style="width: 80px;"><input type="text"></td>
+                    <td style="width: 120px;"><input type="text"></td>
+                </tr>
+                <tr>
+                    <td>2.</td>
+                    <td><input type="text"></td>
                     <td><input type="text"></td>
                     <td><input type="text"></td>
                 </tr>
                 <tr>
-                    <td>2. <input type="text" style="width: 80%;"></td>
+                    <td>3.</td>
                     <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td>3. <input type="text" style="width: 80%;"></td>
                     <td><input type="text"></td>
                     <td><input type="text"></td>
                 </tr>
                 <tr>
-                    <td rowspan="3">Girls</td>
-                    <td>1. <input type="text" style="width: 80%;"></td>
+                    <td rowspan="3" style="font-weight: bold;">Girls</td>
+                    <td>1.</td>
                     <td><input type="text"></td>
-                    <td><input type="text"></td>
-                </tr>
-                <tr>
-                    <td>2. <input type="text" style="width: 80%;"></td>
                     <td><input type="text"></td>
                     <td><input type="text"></td>
                 </tr>
                 <tr>
-                    <td>3. <input type="text" style="width: 80%;"></td>
+                    <td>2.</td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td>3.</td>
+                    <td><input type="text"></td>
                     <td><input type="text"></td>
                     <td><input type="text"></td>
                 </tr>
