@@ -3,267 +3,186 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anandhavruksham Music Academy | Learn. Perform. Inspire.</title>
-<meta name="description" content="Anandhavruksham Music Academy - Carnatic vocal, veena, violin, mridangam and more. Nurturing musical talent in Tirutani, Thiruvallur.">
+<title>Anandhavruksham | Music institution</title>
+<meta name="description" content="Anandhavruksham Music institution - Carnatic vocal, veena, violin, mridangam and more.">
+<link rel="icon" type="image/png" href="chess/img/anand_vruk_logo.png">
+<link rel="apple-touch-icon" href="chess/img/anand_vruk_logo.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23004d3e'/%3E%3Ctext x='32' y='45' font-size='38' text-anchor='middle' fill='%23c5a059'%3E%26%23119139%3B%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<style>
+:root{
+  --green:#004d3e;
+  --green-dark:#00362c;
+  --green-light:#00695c;
+  --gold:#c5a059;
+  --gold-soft:#e6d3ac;
+  --bg:#fdfdf5;
+  --ink:#1d2b28;
+  --radius:6vmin;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{
+  font-family:'Poppins',sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  display:grid;
+  place-items:center;
+}
 
+/* ---------- Scene ---------- */
+.scene{
+  position:relative;
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 80% 12%,rgba(197,160,89,.20),transparent 42%),
+    radial-gradient(circle at 12% 88%,rgba(0,105,92,.16),transparent 46%),
+    linear-gradient(160deg,#fdfdf5 0%,#f1f3e9 100%);
+}
+.glow{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;pointer-events:none}
+.glow.g1{width:44vmin;height:44vmin;background:rgba(197,160,89,.45);top:-8vmin;left:-6vmin;animation:pulse 9s ease-in-out infinite}
+.glow.g2{width:50vmin;height:50vmin;background:rgba(0,105,92,.35);bottom:-12vmin;right:-8vmin;animation:pulse 11s ease-in-out infinite reverse}
+@keyframes pulse{50%{transform:scale(1.18);opacity:.35}}
 
+/* ---------- Stage ---------- */
+.stage{
+  position:relative;
+  width:86vmin;
+  height:86vmin;
+  max-width:640px;
+  max-height:640px;
+  display:grid;
+  place-items:center;
+}
+.ring{
+  position:absolute;
+  inset:7%;
+  border-radius:50%;
+  border:2px dashed rgba(197,160,89,.45);
+  animation:spin 46s linear infinite;
+}
+.ring.r2{
+  inset:2%;
+  border-style:solid;
+  border-color:rgba(0,77,62,.10);
+  animation-duration:70s;
+  animation-direction:reverse;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
 
+/* ---------- Center logo card ---------- */
+.logo-card{
+  position:relative;
+  z-index:3;
+  width:56%;
+  height:56%;
+  border-radius:var(--radius);
+  background:#fff;
+  border:2px solid rgba(197,160,89,.5);
+  box-shadow:0 18px 40px rgba(0,54,44,.16);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:1.2vmin;
+  padding:3vmin;
+  text-align:center;
+}
+.logo-card img{height:clamp(44px,15vmin,120px);width:auto}
+.logo-card h1{
+  font-family:'Playfair Display',serif;
+  color:var(--green);
+  font-size:clamp(1rem,4.4vmin,2.1rem);
+  line-height:1.1;
+}
+.logo-card p{
+  font-size:clamp(.58rem,1.9vmin,.9rem);
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  color:var(--gold);
+  font-weight:500;
+}
 
+/* ---------- Orbiting instrument icons ---------- */
+.icon{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:11vmin;
+  height:11vmin;
+  margin:-5.5vmin 0 0 -5.5vmin;
+  transform:rotate(var(--a)) translate(38vmin) rotate(calc(-1 * var(--a)));
+  z-index:2;
+}
+.bubble{
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  background:#fff;
+  border:1px solid rgba(0,77,62,.08);
+  box-shadow:0 10px 24px rgba(0,54,44,.14);
+  display:grid;
+  place-items:center;
+  font-size:5vmin;
+  line-height:1;
+  animation:float 5.5s ease-in-out infinite;
+}
+.icon:nth-child(2) .bubble{animation-delay:-.4s}
+.icon:nth-child(3) .bubble{animation-delay:-.8s}
+.icon:nth-child(4) .bubble{animation-delay:-1.2s}
+.icon:nth-child(5) .bubble{animation-delay:-1.6s}
+.icon:nth-child(6) .bubble{animation-delay:-2s}
+.icon:nth-child(7) .bubble{animation-delay:-2.4s}
+.icon:nth-child(8) .bubble{animation-delay:-2.8s}
+.icon:nth-child(9) .bubble{animation-delay:-3.2s}
+.icon:nth-child(10) .bubble{animation-delay:-3.6s}
+.icon:nth-child(11) .bubble{animation-delay:-4s}
+.icon:nth-child(12) .bubble{animation-delay:-4.4s}
+@keyframes float{50%{transform:translateY(-1.4vmin)}}
+
+/* ---------- Responsive tweaks ---------- */
+@media(max-width:560px){
+  .icon{width:12.5vmin;height:12.5vmin;margin:-6.25vmin 0 0 -6.25vmin;transform:rotate(var(--a)) translate(36vmin) rotate(calc(-1 * var(--a)))}
+  .bubble{font-size:5.6vmin}
+  .logo-card{width:58%;height:58%}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none !important}
+}
+</style>
+</head>
 <body>
 
-<header id="header">
-  <nav class="nav container">
-    <a href="#home" class="brand">
-      <img src="chess/img/anand_vruk_logo.png" alt="Anandhavruksham Logo" style="width: 200px !important;">
+  <main class="scene">
+    <span class="glow g1"></span>
+    <span class="glow g2"></span>
 
-    </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#courses">Courses</a></li>
-      <li><a href="#why">Why Us</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <a href="#contact" class="btn btn-primary">Enroll Now</a>
-    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
-  </nav>
-</header>
-
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="container hero-grid">
-    <div>
-      <span class="eyebrow">Learn · Perform · Inspire</span>
-      <h1>Where <em>Music</em><br>Finds Its Roots</h1>
-      <p>Anandhavruksham Music Academy nurtures young talent in classical and contemporary music — with dedicated gurus, disciplined practice and a stage for every student to shine.</p>
-      <div class="hero-actions">
-        <a href="#courses" class="btn btn-primary">Explore Courses</a>
-        <a href="#contact" class="btn btn-ghost">Book a Free Trial</a>
-      </div>
-      <div class="hero-stats">
-        <div class="stat"><strong>15+</strong><span>Years of Teaching</span></div>
-        <div class="stat"><strong>500+</strong><span>Students Trained</span></div>
-        <div class="stat"><strong>8</strong><span>Instruments & Arts</span></div>
-      </div>
-    </div>
-    <div class="hero-art">
+    <section class="stage">
       <span class="ring"></span>
-      <span class="ring"></span>
-      <span class="music-note">&#9835;</span>
-      <span class="music-note">&#9833;</span>
-      <div class="disc"></div>
-      <div class="logo-float">
-        <img src="chess/img/anand_vruk_logo.png" alt="Anandhavruksham Music Academy">
+      <span class="ring r2"></span>
+
+      <span class="icon" style="--a:0deg"><i class="bubble" aria-hidden="true">&#127929;</i></span>
+      <span class="icon" style="--a:36deg"><i class="bubble" aria-hidden="true">&#127931;</i></span>
+      <span class="icon" style="--a:72deg"><i class="bubble" aria-hidden="true">&#127928;</i></span>
+      <span class="icon" style="--a:108deg"><i class="bubble" aria-hidden="true">&#127930;</i></span>
+      <span class="icon" style="--a:144deg"><i class="bubble" aria-hidden="true">&#129345;</i></span>
+      <span class="icon" style="--a:180deg"><i class="bubble" aria-hidden="true">&#127927;</i></span>
+      <span class="icon" style="--a:216deg"><i class="bubble" aria-hidden="true">&#127908;</i></span>
+      <span class="icon" style="--a:252deg"><i class="bubble" aria-hidden="true">&#127911;</i></span>
+      <span class="icon" style="--a:288deg"><i class="bubble" aria-hidden="true">&#119070;</i></span>
+      <span class="icon" style="--a:324deg"><i class="bubble" aria-hidden="true">&#127925;</i></span>
+
+      <div class="logo-card">
+        <img src="./chess/img/anand_vruk_logo.png" alt="Anandhavruksham Logo">
+        <h1>Anandhavruksham</h1>
+        <p>Music Academy</p>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
+  </main>
 
-<!-- STRIP -->
-<div class="strip">
-  <div class="strip-track">
-    <span>Carnatic Vocal</span><span>&#9835;</span><span>Veena</span><span>&#9835;</span><span>Violin</span><span>&#9835;</span>
-    <span>Mridangam</span><span>&#9835;</span><span>Keyboard</span><span>&#9835;</span><span>Flute</span><span>&#9835;</span>
-    <span>Carnatic Vocal</span><span>&#9835;</span><span>Veena</span><span>&#9835;</span><span>Violin</span><span>&#9835;</span>
-    <span>Mridangam</span><span>&#9835;</span><span>Keyboard</span><span>&#9835;</span><span>Flute</span><span>&#9835;</span>
-  </div>
-</div>
-
-<!-- ABOUT -->
-<section class="section" id="about">
-  <div class="container about-grid">
-    <div class="reveal">
-      <span class="eyebrow">About Us</span>
-      <h2 class="section-title">A Legacy of Melody &amp; Discipline</h2>
-      <p class="section-lead">Founded with the vision of preserving our musical heritage, Anandhavruksham Music Academy blends traditional <em>gurukula</em> values with a modern, encouraging learning environment.</p>
-      <ul class="about-features">
-        <li><span class="tick">&#10003;</span><span><b>Expert Gurus</b> — experienced performers and dedicated teachers guiding every student.</span></li>
-        <li><span class="tick">&#10003;</span><span><b>Structured Curriculum</b> — graded syllabus from fundamentals to advanced concert repertoire.</span></li>
-        <li><span class="tick">&#10003;</span><span><b>Stage Exposure</b> — regular concerts, arangetram and competitions to build confidence.</span></li>
-      </ul>
-    </div>
-    <div class="about-card reveal">
-      <p class="quote">&ldquo;Music is the soul of life — we teach it with devotion, patience and joy.&rdquo;</p>
-      <p class="section-lead" style="margin-inline:0">From a child's first swara to a student's first solo performance, we walk every step together. Small batches, personal attention and a warm family atmosphere make learning here a truly memorable journey.</p>
-      <a href="#contact" class="btn btn-gold" style="margin-top:26px">Join Our Family</a>
-    </div>
-  </div>
-</section>
-
-<!-- COURSES -->
-<section class="section courses" id="courses">
-  <div class="container">
-    <div style="text-align:center">
-      <span class="eyebrow">What We Teach</span>
-      <h2 class="section-title">Our Courses</h2>
-      <p class="section-lead" style="margin-inline:auto">Choose from a rich bouquet of classical and contemporary programmes, taught by passionate instructors.</p>
-    </div>
-    <div class="grid-3">
-      <div class="course reveal"><div class="ico">&#9835;</div><h3>Carnatic Vocal</h3><p>Sarali varisai to varnams and kritis — build a strong base in pitch, rhythm and bhava.</p><span class="tag">Beginner · Advanced</span></div>
-      <div class="course reveal"><div class="ico">&#127932;</div><h3>Veena</h3><p>Learn the divine instrument with correct fingering, gamakas and concert-ready techniques.</p><span class="tag">Traditional</span></div>
-      <div class="course reveal"><div class="ico">&#127931;</div><h3>Violin</h3><p>Master bowing, fingering and the art of accompanying vocalists in Carnatic style.</p><span class="tag">Classical</span></div>
-      <div class="course reveal"><div class="ico">&#129345;</div><h3>Mridangam</h3><p>Percussion with precision — talam, sollukattu and laya exercises for rhythmic mastery.</p><span class="tag">Percussion</span></div>
-      <div class="course reveal"><div class="ico">&#127929;</div><h3>Keyboard</h3><p>Notes, chords and film songs — a fun, structured path into modern music.</p><span class="tag">Contemporary</span></div>
-      <div class="course reveal"><div class="ico">&#127927;</div><h3>Flute</h3><p>Breath control, sruti alignment and beautiful raga renditions on the bansuri.</p><span class="tag">Classical</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- WHY US -->
-<section class="section" id="why">
-  <div class="container">
-    <div style="text-align:center">
-      <span class="eyebrow">Why Choose Us</span>
-      <h2 class="section-title">Why Students Love Learning Here</h2>
-    </div>
-    <div class="why-grid">
-      <div class="why reveal"><span class="num">01</span><h4>Small Batches</h4><p>Personal attention to every student for faster, confident progress.</p></div>
-      <div class="why reveal"><span class="num">02</span><h4>Certified Syllabus</h4><p>Graded levels with examinations and recognised certification.</p></div>
-      <div class="why reveal"><span class="num">03</span><h4>Practice Support</h4><p>Recorded lessons and doubt-clearing sessions between classes.</p></div>
-      <div class="why reveal"><span class="num">04</span><h4>Performance Stages</h4><p>Annual concerts, temple performances and inter-school competitions.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- GALLERY -->
-<section class="section courses" id="gallery">
-  <div class="container">
-    <div style="text-align:center">
-      <span class="eyebrow">Moments</span>
-      <h2 class="section-title">Our Gallery</h2>
-      <p class="section-lead" style="margin-inline:auto">Glimpses from our classes, concerts and celebrations.</p>
-    </div>
-    <div class="gallery">
-      <div class="g-item wide tall reveal">Class Sessions</div>
-      <div class="g-item reveal">Annual Concert</div>
-      <div class="g-item reveal">Arangetram</div>
-      <div class="g-item wide reveal">Practice Hall</div>
-      <div class="g-item reveal">Competitions</div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="section testimonials">
-  <div class="container">
-    <div style="text-align:center">
-      <span class="eyebrow">Testimonials</span>
-      <h2 class="section-title">What Parents Say</h2>
-    </div>
-    <div class="grid-3 tm">
-      <div class="tm-card reveal">
-        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p>"My daughter's confidence has grown beautifully. The teachers are patient and truly caring."</p>
-        <div class="tm-who"><span class="av">L</span><div><b>Lakshmi R.</b><span>Parent, Tirutani</span></div></div>
-      </div>
-      <div class="tm-card reveal">
-        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p>"The structured syllabus and stage opportunities made all the difference in my son's journey."</p>
-        <div class="tm-who"><span class="av">S</span><div><b>Suresh K.</b><span>Parent, Thiruvallur</span></div></div>
-      </div>
-      <div class="tm-card reveal">
-        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p>"Warm atmosphere, dedicated gurus and real performance exposure — highly recommended."</p>
-        <div class="tm-who"><span class="av">P</span><div><b>Priya M.</b><span>Parent, Tirutani</span></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="section" id="contact">
-  <div class="container">
-    <div style="text-align:center">
-      <span class="eyebrow">Get In Touch</span>
-      <h2 class="section-title">Start Your Musical Journey</h2>
-      <p class="section-lead" style="margin-inline:auto">Reach out for admissions, class timings or a free trial session.</p>
-    </div>
-    <div class="contact-grid">
-      <div class="info-card reveal">
-        <h3>Visit Our Academy</h3>
-        <div class="info-item">
-          <span class="ic">&#128205;</span>
-          <div><b>Address</b><p>No.10, Dr. Radhakrishnan Street, Above Kidszom Play School, Tirutani - 631209, Thiruvallur Dist., Tamilnadu.</p></div>
-        </div>
-        <div class="info-item">
-          <span class="ic">&#128222;</span>
-          <div><b>Phone</b><p><a href="tel:+919962999106">+91 99629 99106</a><br><a href="tel:+919500495449">+91 95004 95449</a></p></div>
-        </div>
-        <div class="info-item">
-          <span class="ic">&#9993;</span>
-          <div><b>Email</b><p><a href="mailto:info@anandhavruksham.com">info@anandhavruksham.com</a></p></div>
-        </div>
-        <div class="map-box">
-          <iframe title="Location" loading="lazy" src="https://www.google.com/maps?q=Tirutani%20631209%20Thiruvallur%20Tamilnadu&output=embed"></iframe>
-        </div>
-      </div>
-      <form id="enquiryForm" class="reveal">
-        <div class="form-row">
-          <div class="field"><label for="name">Full Name</label><input type="text" id="name" required placeholder="Your name"></div>
-          <div class="field"><label for="phone">Phone</label><input type="tel" id="phone" required placeholder="Mobile number"></div>
-        </div>
-        <div class="field"><label for="email">Email</label><input type="email" id="email" placeholder="you@example.com"></div>
-        <div class="field">
-          <label for="course">Course of Interest</label>
-          <select id="course">
-            <option>Carnatic Vocal</option><option>Veena</option><option>Violin</option>
-            <option>Mridangam</option><option>Keyboard</option><option>Flute</option>
-          </select>
-        </div>
-        <div class="field"><label for="msg">Message</label><textarea id="msg" placeholder="Tell us about the student and preferred timings..."></textarea></div>
-        <button type="submit" class="btn btn-primary" style="width:100%">Send Enquiry</button>
-        <p class="form-note" id="formNote">We'll get back to you within 24 hours.</p>
-      </form>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="container">
-    <div class="foot-grid">
-      <div>
-        <a href="#home" class="brand" style="margin-bottom:16px">
-          <img src="chess/img/anand_vruk_logo.png" alt="Anandhavruksham" style="height:56px">
-         
-        </a>
-        <p style="max-width:340px;margin-top:14px">Nurturing musical talent with tradition, discipline and devotion — in the heart of Tirutani, Thiruvallur.</p>
-        <div class="socials" style="margin-top:20px">
-          <a href="#" aria-label="Facebook">f</a>
-          <a href="#" aria-label="Instagram">&#9673;</a>
-          <a href="#" aria-label="YouTube">&#9654;</a>
-          <a href="#" aria-label="WhatsApp">&#9742;</a>
-        </div>
-      </div>
-      <div>
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#courses">Courses</a></li>
-          <li><a href="#gallery">Gallery</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Courses</h4>
-        <ul>
-          <li><a href="#courses">Carnatic Vocal</a></li>
-          <li><a href="#courses">Veena &amp; Violin</a></li>
-          <li><a href="#courses">Mridangam</a></li>
-          <li><a href="#courses">Keyboard</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="foot-bottom">
-      <span>&copy; <span id="year"></span> Anandhavruksham Music Academy. All rights reserved.</span>
-      <span>Made with &#9835; in Tamilnadu</span>
-    </div>
-  </div>
-</footer>
-
-<script src="js/style.js"></script>
 </body>
 </html>
