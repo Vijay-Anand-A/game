@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form - Anandhavruksham Chess Tournament</title>
+    <style>
+        :root {
+            --primary-green: #004d3e;
+            --accent-gold: #c5a059;
+            --bg-light: #fdfdf5;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+        }
+        .form-container {
+            background-color: white;
+            width: 100%;
+            max-width: 900px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+            box-sizing: border-box;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .header-bg {
+            background: linear-gradient(135deg, var(--primary-green) 0%, #00695c 100%);
+            padding: 20px;
+            position: relative;
+            color: white;
+            text-align: center;
+            border-bottom: 5px solid var(--accent-gold);
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 6px 20px;
+            margin-bottom: 0;
+        }
+        .logo-left img { width: 250px; }
+        .logo-right img { height: 50px; }
+        
+        .school-info {
+            background: var(--primary-green);
+            color: white;
+            padding: 5px;
+            font-size: 11px; 
+            line-height: 1.3;
+            border-bottom-left-radius: 50% 20%;
+            border-bottom-right-radius: 50% 20%;
+            text-align: center;
+        }
+        .school-info a { color: white; text-decoration: none; }
+
+        .reg-title-box {
+            background: var(--primary-green);
+            color: white;
+            display: inline-block;
+            padding: 5px 40px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0;
+            border: 2px solid var(--accent-gold);
+        }
+
+        .form-content {
+            padding: 0 30px 20px 30px;
+        }
+
+        .input-group {
+            display: flex;
+            margin-bottom: 6px;
+            align-items: flex-start;
+        }
+        .label {
+            width: 200px;
+            font-weight: 600;
+            color: #333;
+            font-size: 13px;
+            padding-top: 2px;
+        }
+        .colon { width: 15px; text-align: center; padding-top: 2px; }
+        .input-field {
+            flex-grow: 1;
+            background: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 2px 8px;
+        }
+        .address-field {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .address-line {
+            border-bottom: 1px solid #999;
+            height: 20px;
+        }
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 13px;
+            outline: none;
+            padding: 0;
+        }
+
+        .category-container {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .category-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--primary-green);
+        }
+        .category-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--primary-green);
+        }
+
+        .table-responsive {
+            margin-top: 12px;
+            width: 100%;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+        th, td {
+            border: 1px solid #004d3e;
+            padding: 2px;
+            text-align: center;
+            font-size: 12px;
+            height: 22px;
+        }
+        th {
+            background-color: var(--primary-green);
+            color: white;
+            font-weight: 600;
+        }
+        .th-tick { font-size: 11px; }
+
+        .signature-section {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+        .sig-box {
+            text-align: center;
+            width: 220px;
+            font-size: 13px;
+        }
+        .sig-line {
+            border-top: 2px solid #333;
+            margin-bottom: 5px;
+            width: 100%;
+        }
+
+        .footer-bg {
+            background: linear-gradient(to top, var(--primary-green), #00695c);
+            height: 45px;
+            position: relative;
+            border-top: 5px solid var(--accent-gold);
+            display: flex;
+            align-items: flex-end;
+            padding: 6px;
+            border-top-left-radius: 50% 30%;
+            border-top-right-radius: 50% 30%;
+        }
+        .chess-icons {
+            display: flex;
+            gap: 8px;
+            color: var(--accent-gold);
+            font-size: 18px;
+            margin-left: 20px;
+            margin-bottom: 3px;
+        }
+
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        button {
+            padding: 12px 25px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 30px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        button:hover { transform: scale(1.05); }
+        .btn-send { background-color: #2e7d32; }
+        .btn-download { background-color: #1565c0; }
+
+        @media (max-width: 600px) {
+            .form-content { padding: 12px; }
+            .input-group { flex-direction: column; align-items: stretch; }
+            .label { width: 100%; margin-bottom: 3px; }
+            .colon { display: none; }
+            .sig-box { width: 140px; font-size: 11px; }
+            .reg-title-box { padding: 5px 15px; font-size: 15px; }
+        }
+
+        @page { size: A4; margin: 8mm; }
+
+        @media print {
+            .buttons { display: none; }
+            body { background: white; }
+            .form-container { border: none; box-shadow: none; margin: 0; width: 100%; max-width: 100%; }
+            .footer-bg { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .header-bg { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .reg-title-box, th, .school-info { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            table { min-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container" id="printable-form">
+        <div class="header-top">
+            <div class="logo-left"><img src="img/anand_vruk_logo.png" alt="Anandha Vruksham Logo"></div>
+            <div class="logo-right"><img src="img/chess_tour_logo.png" alt="Chess Tournament Logo"></div>
+        </div>
+
+        <div class="school-info">
+            <div>No.10, Dr. Radhakrishnan Street, Above Kidszom Play School, Tirutani - 631209. Thiruvallur Dist., Tamilnadu.</div>
+            <div>www.anandhavruksham.com | E-mail: info@anandhavruksham.com | Ph: 9962999106, 9500495449</div>
+        </div>
+
+        <center>
+            <div class="reg-title-box">Registration Form</div>
+        </center>
+
+        <div class="form-content">
+            <div class="input-group">
+                <div class="label">School Name & Address</div>
+                <div class="colon">:</div>
+                <div class="address-field">
+                    <div class="address-line"><input type="text" id="schoolAddress1"></div>
+                    <div class="address-line"><input type="text" id="schoolAddress2"></div>
+                    <div class="address-line"><input type="text" id="schoolAddress3"></div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="label">Category (tick)</div>
+                <div class="colon">:</div>
+                <div class="category-container">
+                    <label class="category-item"><input type="checkbox"> UNDER-08</label>
+                    <label class="category-item"><input type="checkbox"> UNDER-11</label>
+                    <label class="category-item"><input type="checkbox"> UNDER-13</label>
+                    <label class="category-item"><input type="checkbox"> UNDER-15</label>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="label">E-Mail ID of the school</div>
+                <div class="colon">:</div>
+                <div class="input-field"><input type="email" id="schoolEmail"></div>
+            </div>
+
+            <div class="input-group">
+                <div class="label">Name of the Principal</div>
+                <div class="colon">:</div>
+                <div class="input-field"><input type="text" id="principalName"></div>
+            </div>
+
+            <div class="input-group">
+                <div class="label">Contact Number</div>
+                <div class="colon">:</div>
+                <div class="input-field"><input type="text" id="principalContact"></div>
+            </div>
+
+            <div class="input-group">
+                <div class="label">Name of the P.D/P.E.T/ Coach</div>
+                <div class="colon">:</div>
+                <div class="input-field"><input type="text" id="coachName"></div>
+            </div>
+
+            <div class="input-group">
+                <div class="label">Contact Number</div>
+                <div class="colon">:</div>
+                <div class="input-field"><input type="text" id="coachContact"></div>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th rowspan="2" style="width: 50px;">Sl.no</th>
+                            <th rowspan="2">Participants Name</th>
+                            <th colspan="2" class="th-tick">Tick</th>
+                            <th rowspan="2" style="width: 100px;">Class & sec</th>
+                            <th rowspan="2" style="width: 120px;">DOB</th>
+                        </tr>
+                        <tr>
+                            <th style="width: 50px;">Boy</th>
+                            <th style="width: 50px;">Girl</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><input type="text"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><input type="text"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><input type="text"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td><input type="text"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td><input type="text"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td><input type="text"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td><input type="text"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td><input type="text"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td><input type="text"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td><input type="text"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="text"></td>
+                            <td><input type="text"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="signature-section">
+                <div class="sig-box">
+                    <div class="sig-line"></div>
+                    <strong>P.D. / PET Signature</strong>
+                </div>
+                <div class="sig-box">
+                    <div class="sig-line"></div>
+                    <strong>Principal Signature</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bg">
+            <div class="chess-icons">
+                <span>♔</span><span>♕</span><span>♖</span><span>♗</span><span>♘</span><span>♙</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button class="btn-send" id="sendBtn">Send</button>
+        <button class="btn-download" onclick="window.print()">Download</button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDHup4M5P3z-fy9fVRElBx0hutREWZGSAM",
+            authDomain: "anandhavruksham-3aa36.firebaseapp.com",
+            projectId: "anandhavruksham-3aa36",
+            storageBucket: "anandhavruksham-3aa36.firebasestorage.app",
+            messagingSenderId: "604117717957",
+            appId: "1:604117717957:web:3df03ca1c702dba99331ac"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const sendBtn = document.getElementById('sendBtn');
+
+        sendBtn.addEventListener('click', async () => {
+            const categories = [];
+            document.querySelectorAll('.category-item').forEach(item => {
+                if (item.querySelector('input').checked) {
+                    categories.push(item.innerText.trim());
+                }
+            });
+
+            const participants = [];
+            document.querySelectorAll('.table-responsive tbody tr').forEach(row => {
+                const cells = row.children;
+                const name = cells[1].querySelector('input').value.trim();
+                const isBoy = cells[2].querySelector('input').checked;
+                const isGirl = cells[3].querySelector('input').checked;
+                const classSec = cells[4].querySelector('input').value.trim();
+                const dob = cells[5].querySelector('input').value.trim();
+                if (name || classSec || dob) {
+                    participants.push({
+                        slno: parseInt(cells[0].innerText.trim(), 10),
+                        name: name,
+                        gender: isBoy ? 'Boy' : (isGirl ? 'Girl' : ''),
+                        classSec: classSec,
+                        dob: dob
+                    });
+                }
+            });
+
+            const schoolAddress = [
+                document.getElementById('schoolAddress1').value.trim(),
+                document.getElementById('schoolAddress2').value.trim(),
+                document.getElementById('schoolAddress3').value.trim()
+            ].filter(Boolean).join(', ');
+
+            const data = {
+                schoolNameAddress: schoolAddress,
+                categories: categories,
+                schoolEmail: document.getElementById('schoolEmail').value.trim(),
+                principalName: document.getElementById('principalName').value.trim(),
+                principalContact: document.getElementById('principalContact').value.trim(),
+                coachName: document.getElementById('coachName').value.trim(),
+                coachContact: document.getElementById('coachContact').value.trim(),
+                participants: participants,
+                createdAt: serverTimestamp()
+            };
+
+            sendBtn.disabled = true;
+            sendBtn.innerText = 'Sending...';
+
+            try {
+                await addDoc(collection(db, 'game_reg'), data);
+                alert('Registration submitted successfully!');
+                document.getElementById('printable-form').querySelectorAll('input').forEach(input => {
+                    if (input.type === 'checkbox') { input.checked = false; } else { input.value = ''; }
+                });
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to submit. Please try again.');
+            } finally {
+                sendBtn.disabled = false;
+                sendBtn.innerText = 'Send';
+            }
+        });
+    </script>
+
+</body>
+</html>
+
