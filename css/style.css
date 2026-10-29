@@ -94,10 +94,18 @@ nav {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(to right, #ffffff, #fffdf8);
+    background: url('../images/wall1.png') no-repeat right center;
+    background-size: 70% auto;
     padding: 60px 0;
     position: relative;
     overflow: hidden;
+}
+
+@media (max-width: 992px) {
+    .hero {
+        background-position: center;
+        background-size: cover;
+    }
 }
 
 .hero-container {
