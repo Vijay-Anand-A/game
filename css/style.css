@@ -95,7 +95,7 @@ nav {
 /* Hero Section */
 .hero {
     background: url('../images/wall1.png') no-repeat right center;
-    background-size: 70% auto;
+    background-size: 100% 100%;
     padding: 60px 0;
     position: relative;
     overflow: hidden;
