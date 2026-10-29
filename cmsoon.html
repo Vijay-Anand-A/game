@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anandhavruksham | Music institution</title>
+<meta name="description" content="Anandhavruksham Music institution - Carnatic vocal, veena, violin, mridangam and more.">
+<link rel="icon" type="image/png" href="chess/img/anand_vruk_logo.png">
+<link rel="apple-touch-icon" href="chess/img/anand_vruk_logo.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23004d3e'/%3E%3Ctext x='32' y='45' font-size='38' text-anchor='middle' fill='%23c5a059'%3E%26%23119139%3B%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#004d3e;
+  --green-dark:#00362c;
+  --green-light:#00695c;
+  --gold:#c5a059;
+  --gold-soft:#e6d3ac;
+  --bg:#fdfdf5;
+  --ink:#1d2b28;
+  --radius:6vmin;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{
+  font-family:'Poppins',sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  display:grid;
+  place-items:center;
+}
+
+/* ---------- Scene ---------- */
+.scene{
+  position:relative;
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 80% 12%,rgba(197,160,89,.20),transparent 42%),
+    radial-gradient(circle at 12% 88%,rgba(0,105,92,.16),transparent 46%),
+    linear-gradient(160deg,#fdfdf5 0%,#f1f3e9 100%);
+}
+.glow{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;pointer-events:none}
+.glow.g1{width:44vmin;height:44vmin;background:rgba(197,160,89,.45);top:-8vmin;left:-6vmin;animation:pulse 9s ease-in-out infinite}
+.glow.g2{width:50vmin;height:50vmin;background:rgba(0,105,92,.35);bottom:-12vmin;right:-8vmin;animation:pulse 11s ease-in-out infinite reverse}
+@keyframes pulse{50%{transform:scale(1.18);opacity:.35}}
+
+/* ---------- Stage ---------- */
+.stage{
+  position:relative;
+  width:86vmin;
+  height:86vmin;
+  max-width:640px;
+  max-height:640px;
+  display:grid;
+  place-items:center;
+}
+.ring{
+  position:absolute;
+  inset:7%;
+  border-radius:50%;
+  border:2px dashed rgba(197,160,89,.45);
+  animation:spin 46s linear infinite;
+}
+.ring.r2{
+  inset:2%;
+  border-style:solid;
+  border-color:rgba(0,77,62,.10);
+  animation-duration:70s;
+  animation-direction:reverse;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- Center logo card ---------- */
+.logo-card{
+  position:relative;
+  z-index:3;
+  width:56%;
+  height:56%;
+  border-radius:var(--radius);
+  background:#fff;
+  border:2px solid rgba(197,160,89,.5);
+  box-shadow:0 18px 40px rgba(0,54,44,.16);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:1.2vmin;
+  padding:3vmin;
+  text-align:center;
+}
+.logo-card img{height:clamp(44px,15vmin,120px);width:auto}
+.logo-card h1{
+  font-family:'Playfair Display',serif;
+  color:var(--green);
+  font-size:clamp(1rem,4.4vmin,2.1rem);
+  line-height:1.1;
+}
+.logo-card p{
+  font-size:clamp(.58rem,1.9vmin,.9rem);
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  color:var(--gold);
+  font-weight:500;
+}
+
+/* ---------- Orbiting instrument icons ---------- */
+.icon{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:11vmin;
+  height:11vmin;
+  margin:-5.5vmin 0 0 -5.5vmin;
+  transform:rotate(var(--a)) translate(38vmin) rotate(calc(-1 * var(--a)));
+  z-index:2;
+}
+.bubble{
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  background:#fff;
+  border:1px solid rgba(0,77,62,.08);
+  box-shadow:0 10px 24px rgba(0,54,44,.14);
+  display:grid;
+  place-items:center;
+  font-size:5vmin;
+  line-height:1;
+  animation:float 5.5s ease-in-out infinite;
+}
+.icon:nth-child(2) .bubble{animation-delay:-.4s}
+.icon:nth-child(3) .bubble{animation-delay:-.8s}
+.icon:nth-child(4) .bubble{animation-delay:-1.2s}
+.icon:nth-child(5) .bubble{animation-delay:-1.6s}
+.icon:nth-child(6) .bubble{animation-delay:-2s}
+.icon:nth-child(7) .bubble{animation-delay:-2.4s}
+.icon:nth-child(8) .bubble{animation-delay:-2.8s}
+.icon:nth-child(9) .bubble{animation-delay:-3.2s}
+.icon:nth-child(10) .bubble{animation-delay:-3.6s}
+.icon:nth-child(11) .bubble{animation-delay:-4s}
+.icon:nth-child(12) .bubble{animation-delay:-4.4s}
+@keyframes float{50%{transform:translateY(-1.4vmin)}}
+
+/* ---------- Responsive tweaks ---------- */
+@media(max-width:560px){
+  .icon{width:12.5vmin;height:12.5vmin;margin:-6.25vmin 0 0 -6.25vmin;transform:rotate(var(--a)) translate(36vmin) rotate(calc(-1 * var(--a)))}
+  .bubble{font-size:5.6vmin}
+  .logo-card{width:58%;height:58%}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none !important}
+}
+</style>
+</head>
+<body>
+
+  <main class="scene">
+    <span class="glow g1"></span>
+    <span class="glow g2"></span>
+
+    <section class="stage">
+      <span class="ring"></span>
+      <span class="ring r2"></span>
+
+      <span class="icon" style="--a:0deg"><i class="bubble" aria-hidden="true">&#127929;</i></span>
+      <span class="icon" style="--a:36deg"><i class="bubble" aria-hidden="true">&#127931;</i></span>
+      <span class="icon" style="--a:72deg"><i class="bubble" aria-hidden="true">&#127928;</i></span>
+      <span class="icon" style="--a:108deg"><i class="bubble" aria-hidden="true">&#127930;</i></span>
+      <span class="icon" style="--a:144deg"><i class="bubble" aria-hidden="true">&#129345;</i></span>
+      <span class="icon" style="--a:180deg"><i class="bubble" aria-hidden="true">&#127927;</i></span>
+      <span class="icon" style="--a:216deg"><i class="bubble" aria-hidden="true">&#127908;</i></span>
+      <span class="icon" style="--a:252deg"><i class="bubble" aria-hidden="true">&#127911;</i></span>
+      <span class="icon" style="--a:288deg"><i class="bubble" aria-hidden="true">&#119070;</i></span>
+      <span class="icon" style="--a:324deg"><i class="bubble" aria-hidden="true">&#127925;</i></span>
+
+      <div class="logo-card">
+        <img src="./chess/img/anand_vruk_logo.png" alt="Anandhavruksham Logo">
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
