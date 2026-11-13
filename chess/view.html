@@ -74,6 +74,15 @@
         }
         .status.paid { background: #d4edda; color: #155724; }
         .status.unpaid { background: #f8d7da; color: #721c24; }
+        .type-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .type-badge.school { background: #e3f2fd; color: #1565c0; }
+        .type-badge.individual { background: #fff3e0; color: #e65100; }
         .view-btn {
             background: var(--primary-green);
             color: white;
@@ -181,7 +190,7 @@
 <body>
 
     <div class="page-header">
-        <h1>🏆 Schools Registered - Chess Tournament</h1>
+        <h1>🏆 Registrations - Chess Tournament</h1>
         <div class="count" id="totalCount">Total: 0</div>
     </div>
 
@@ -190,14 +199,15 @@
             <thead>
                 <tr>
                     <th style="width: 50px;">Sl.no</th>
-                    <th>School Name & Address</th>
-                    <th style="width: 130px;">Student Count</th>
+                    <th style="width: 110px;">Type</th>
+                    <th>Name</th>
+                    <th style="width: 120px;">Student Count</th>
                     <th style="width: 130px;">Fee Status</th>
                     <th style="width: 120px;">Action</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
-                <tr><td colspan="5" class="loading">Loading...</td></tr>
+                <tr><td colspan="6" class="loading">Loading...</td></tr>
             </tbody>
         </table>
     </div>
@@ -252,7 +262,8 @@
                 registrations = [];
                 snap.forEach(d => {
                     const data = d.data();
-                    if (!data.schoolNameAddress && !data.participants) return;
+                    // include both school and individual registrations
+                    if (!data.schoolNameAddress && !data.participants && data.registrationType !== 'individual') return;
                     registrations.push({ id: d.id, ...data });
                 });
                 registrations.sort((a, b) => {
@@ -263,23 +274,29 @@
                 renderTable();
             } catch (error) {
                 console.error('Error loading:', error);
-                tableBody.innerHTML = '<tr><td colspan="5" class="empty">Error loading data. Check Firestore rules.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="6" class="empty">Error loading data. Check Firestore rules.</td></tr>';
             }
         }
 
         function renderTable() {
             totalCount.textContent = 'Total: ' + registrations.length;
             if (registrations.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="5" class="empty">No registrations found.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="6" class="empty">No registrations found.</td></tr>';
                 return;
             }
             tableBody.innerHTML = registrations.map((reg, i) => {
-                const studentCount = (reg.participants || []).length;
+                const isIndividual = reg.registrationType === 'individual';
+                const studentCount = isIndividual ? 1 : (reg.participants || []).length;
+                const name = isIndividual ? (reg.participantName || '-') : (reg.schoolNameAddress || '-');
                 const paid = reg.feePaid === true;
+                const typeBadge = isIndividual
+                    ? '<span class="type-badge individual">Individual</span>'
+                    : '<span class="type-badge school">School</span>';
                 return `
                     <tr>
                         <td>${i + 1}</td>
-                        <td>${escapeHtml(reg.schoolNameAddress) || '-'}</td>
+                        <td>${typeBadge}</td>
+                        <td>${escapeHtml(name)}</td>
                         <td>${studentCount}</td>
                         <td>
                             <span class="status ${paid ? 'paid' : 'unpaid'}" onclick="toggleFee('${reg.id}')">
@@ -312,51 +329,72 @@
             const reg = registrations.find(r => r.id === id);
             if (!reg) return;
 
-            const categories = (reg.categories || []).join(', ') || '-';
-            const participants = reg.participants || [];
+            const isIndividual = reg.registrationType === 'individual';
+            const modalTitle = isIndividual ? 'Individual Registration Form' : 'School Registration Form';
+            document.getElementById('modalFormTitle').textContent = modalTitle;
 
-            let rows = '';
-            for (let i = 1; i <= 10; i++) {
-                const p = participants[i - 1];
-                rows += `
-                    <tr>
-                        <td>${i}</td>
-                        <td>${p ? escapeHtml(p.name) : ''}</td>
-                        <td>${p && p.gender === 'Boy' ? '✔' : ''}</td>
-                        <td>${p && p.gender === 'Girl' ? '✔' : ''}</td>
-                        <td>${p ? escapeHtml(p.classSec) : ''}</td>
-                        <td>${p ? escapeHtml(p.dob) : ''}</td>
-                    </tr>
+            if (isIndividual) {
+                document.getElementById('modalContent').innerHTML = `
+                    <div class="detail-row"><div class="lbl">Participant Name</div><div class="val">${escapeHtml(reg.participantName)}</div></div>
+                    <div class="detail-row"><div class="lbl">Date of Birth</div><div class="val">${escapeHtml(reg.dob)}</div></div>
+                    <div class="detail-row"><div class="lbl">Age</div><div class="val">${escapeHtml(reg.age)}</div></div>
+                    <div class="detail-row"><div class="lbl">Gender</div><div class="val">${escapeHtml(reg.gender)}</div></div>
+                    <div class="detail-row"><div class="lbl">Class / Grade</div><div class="val">${escapeHtml(reg.classGrade)}</div></div>
+                    <div class="detail-row"><div class="lbl">School Name</div><div class="val">${escapeHtml(reg.schoolName)}</div></div>
+                    <div class="detail-row"><div class="lbl">Category / Group</div><div class="val">${escapeHtml(reg.category)}</div></div>
+                    <div class="detail-row"><div class="lbl">Parent / Guardian Name</div><div class="val">${escapeHtml(reg.parentName)}</div></div>
+                    <div class="detail-row"><div class="lbl">Contact Number</div><div class="val">${escapeHtml(reg.contactNumber)}</div></div>
+                    <div class="detail-row"><div class="lbl">Email</div><div class="val">${escapeHtml(reg.email) || '-'}</div></div>
+                    <div class="detail-row"><div class="lbl">Declaration</div><div class="val">${reg.declaration ? '✓ Agreed' : 'Not declared'}</div></div>
+                    <div class="detail-row"><div class="lbl">Fee Status</div><div class="val">${reg.feePaid === true ? 'Paid' : 'Unpaid'}</div></div>
+                `;
+            } else {
+                const categories = (reg.categories || []).join(', ') || '-';
+                const participants = reg.participants || [];
+
+                let rows = '';
+                for (let i = 1; i <= 10; i++) {
+                    const p = participants[i - 1];
+                    rows += `
+                        <tr>
+                            <td>${i}</td>
+                            <td>${p ? escapeHtml(p.name) : ''}</td>
+                            <td>${p && p.gender === 'Boy' ? '✔' : ''}</td>
+                            <td>${p && p.gender === 'Girl' ? '✔' : ''}</td>
+                            <td>${p ? escapeHtml(p.classSec) : ''}</td>
+                            <td>${p ? escapeHtml(p.dob) : ''}</td>
+                        </tr>
+                    `;
+                }
+
+                document.getElementById('modalContent').innerHTML = `
+                    <div class="detail-row"><div class="lbl">School Name & Address</div><div class="val">${escapeHtml(reg.schoolNameAddress)}</div></div>
+                    <div class="detail-row"><div class="lbl">Category</div><div class="val">${escapeHtml(categories)}</div></div>
+                    <div class="detail-row"><div class="lbl">E-Mail ID of the school</div><div class="val">${escapeHtml(reg.schoolEmail)}</div></div>
+                    <div class="detail-row"><div class="lbl">Name of the Principal</div><div class="val">${escapeHtml(reg.principalName)}</div></div>
+                    <div class="detail-row"><div class="lbl">Contact Number</div><div class="val">${escapeHtml(reg.principalContact)}</div></div>
+                    <div class="detail-row"><div class="lbl">Name of the P.D/P.E.T/ Coach</div><div class="val">${escapeHtml(reg.coachName)}</div></div>
+                    <div class="detail-row"><div class="lbl">Contact Number</div><div class="val">${escapeHtml(reg.coachContact)}</div></div>
+                    <div class="detail-row"><div class="lbl">Fee Status</div><div class="val">${reg.feePaid === true ? 'Paid' : 'Unpaid'}</div></div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Sl.no</th>
+                                <th rowspan="2">Participants Name</th>
+                                <th colspan="2">Tick</th>
+                                <th rowspan="2">Class & sec</th>
+                                <th rowspan="2">DOB</th>
+                            </tr>
+                            <tr><th>Boy</th><th>Girl</th></tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                    <div class="detail-sig">
+                        <div><div class="line"></div><strong>P.D. / PET Signature</strong></div>
+                        <div><div class="line"></div><strong>Principal Signature</strong></div>
+                    </div>
                 `;
             }
-
-            document.getElementById('modalContent').innerHTML = `
-                <div class="detail-row"><div class="lbl">School Name & Address</div><div class="val">${escapeHtml(reg.schoolNameAddress)}</div></div>
-                <div class="detail-row"><div class="lbl">Category</div><div class="val">${escapeHtml(categories)}</div></div>
-                <div class="detail-row"><div class="lbl">E-Mail ID of the school</div><div class="val">${escapeHtml(reg.schoolEmail)}</div></div>
-                <div class="detail-row"><div class="lbl">Name of the Principal</div><div class="val">${escapeHtml(reg.principalName)}</div></div>
-                <div class="detail-row"><div class="lbl">Contact Number</div><div class="val">${escapeHtml(reg.principalContact)}</div></div>
-                <div class="detail-row"><div class="lbl">Name of the P.D/P.E.T/ Coach</div><div class="val">${escapeHtml(reg.coachName)}</div></div>
-                <div class="detail-row"><div class="lbl">Contact Number</div><div class="val">${escapeHtml(reg.coachContact)}</div></div>
-                <div class="detail-row"><div class="lbl">Fee Status</div><div class="val">${reg.feePaid === true ? 'Paid' : 'Unpaid'}</div></div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th rowspan="2">Sl.no</th>
-                            <th rowspan="2">Participants Name</th>
-                            <th colspan="2">Tick</th>
-                            <th rowspan="2">Class & sec</th>
-                            <th rowspan="2">DOB</th>
-                        </tr>
-                        <tr><th>Boy</th><th>Girl</th></tr>
-                    </thead>
-                    <tbody>${rows}</tbody>
-                </table>
-                <div class="detail-sig">
-                    <div><div class="line"></div><strong>P.D. / PET Signature</strong></div>
-                    <div><div class="line"></div><strong>Principal Signature</strong></div>
-                </div>
-            `;
 
             document.getElementById('modal').classList.add('active');
         };
