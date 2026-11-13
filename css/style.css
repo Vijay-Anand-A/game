@@ -464,4 +464,29 @@ nav {
         flex-direction: column;
         gap: 30px;
     }
+
+    /* Compact registration buttons on mobile */
+    .reg-buttons {
+        gap: 16px;
+        margin-top: 20px;
+    }
+    .reg-btn {
+        padding: 14px 18px;
+        gap: 12px;
+        border-radius: 16px;
+        border-width: 2px;
+    }
+    .reg-btn i:first-child {
+        font-size: 24px;
+    }
+    .reg-title {
+        font-size: 16px;
+    }
+    .reg-sub {
+        font-size: 11px;
+    }
+    .reg-arrow {
+        font-size: 16px;
+    }
+}
 }
