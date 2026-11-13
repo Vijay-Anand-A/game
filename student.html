@@ -182,7 +182,7 @@ body{font-family:'Poppins',sans-serif;background:#f5f3ec;color:#1d2b28;line-heig
       <div class="section-body">
         <div class="row">
           <label>Participant Name <span class="req">*</span></label>
-          <input type="text" required placeholder="Enter full name">
+          <input type="text" id="participantName" required placeholder="Enter full name">
         </div>
 
         <div class="row">
@@ -201,13 +201,12 @@ body{font-family:'Poppins',sans-serif;background:#f5f3ec;color:#1d2b28;line-heig
           <div class="gender-group">
             <label><input type="radio" name="gender" value="male" required> Male</label>
             <label><input type="radio" name="gender" value="female"> Female</label>
-            <label><input type="radio" name="gender" value="other"> Other</label>
           </div>
         </div>
 
         <div class="row">
           <label>Class / Grade <span class="req">*</span></label>
-          <select required>
+          <select id="classGrade" required>
             <option value="">Select Class / Grade</option>
             <option>LKG</option><option>UKG</option>
             <option>Class 1</option><option>Class 2</option><option>Class 3</option>
@@ -220,13 +219,13 @@ body{font-family:'Poppins',sans-serif;background:#f5f3ec;color:#1d2b28;line-heig
 
         <div class="row">
           <label>School Name <span class="req">*</span></label>
-          <input type="text" required placeholder="Enter your school name">
+          <input type="text" id="schoolName" required placeholder="Enter your school name">
         </div>
 
         <div class="row">
           <label>Category / Group <span class="req">*</span></label>
           <div class="cat-row">
-            <select required style="flex:1">
+            <select id="category" required style="flex:1">
               <option value="">Select Category / Group</option>
               <option>Under-7</option>
               <option>Under-9</option>
@@ -249,14 +248,14 @@ body{font-family:'Poppins',sans-serif;background:#f5f3ec;color:#1d2b28;line-heig
       <div class="section-body">
         <div class="row">
           <label>Parent / Guardian Name <span class="req">*</span></label>
-          <input type="text" required placeholder="Enter name">
+          <input type="text" id="parentName" required placeholder="Enter name">
         </div>
 
         <div class="row">
           <label>Contact Number <span class="req">*</span></label>
           <div class="input-icon">
             <i class="fas fa-phone"></i>
-            <input type="tel" required placeholder="Enter mobile number">
+            <input type="tel" id="contactNumber" required placeholder="Enter mobile number">
           </div>
         </div>
 
@@ -264,7 +263,7 @@ body{font-family:'Poppins',sans-serif;background:#f5f3ec;color:#1d2b28;line-heig
           <label>Email <span style="color:#888">(Optional)</span></label>
           <div class="input-icon">
             <i class="fas fa-envelope"></i>
-            <input type="email" placeholder="Enter email address">
+            <input type="email" id="email" placeholder="Enter email address">
           </div>
         </div>
       </div>
@@ -285,7 +284,7 @@ body{font-family:'Poppins',sans-serif;background:#f5f3ec;color:#1d2b28;line-heig
 
     <!-- Buttons -->
     <div class="btn-row">
-      <button type="submit" class="btn-submit">
+      <button type="submit" class="btn-submit" id="submitBtn">
         <i class="fas fa-paper-plane"></i> Submit Registration
       </button>
       <button type="button" class="btn-download" onclick="window.print()">
@@ -306,23 +305,75 @@ body{font-family:'Poppins',sans-serif;background:#f5f3ec;color:#1d2b28;line-heig
   <p>Anandhavruksham International School of Fine Arts &copy; 2026</p>
 </footer>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDHup4M5P3z-fy9fVRElBx0hutREWZGSAM",
+  authDomain: "anandhavruksham-3aa36.firebaseapp.com",
+  projectId: "anandhavruksham-3aa36",
+  storageBucket: "anandhavruksham-3aa36.firebasestorage.app",
+  messagingSenderId: "604117717957",
+  appId: "1:604117717957:web:3df03ca1c702dba99331ac"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 // Auto-calculate age from DOB
 const dob = document.getElementById('dob');
 const age = document.getElementById('age');
-if(dob){
-  dob.addEventListener('change',()=>{
-    if(!dob.value)return;
-    const bd=new Date(dob.value);
-    const diff=Date.now()-bd.getTime();
-    const years=Math.floor(diff/(1000*60*60*24*365.25));
-    if(years>=0) age.value=years;
+if (dob) {
+  dob.addEventListener('change', () => {
+    if (!dob.value) return;
+    const bd = new Date(dob.value);
+    const diff = Date.now() - bd.getTime();
+    const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+    if (years >= 0) age.value = years;
   });
 }
-// Form submit
-document.getElementById('regForm').addEventListener('submit',e=>{
+
+// Form submit -> Firestore
+const form = document.getElementById('regForm');
+const submitBtn = document.getElementById('submitBtn');
+
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  alert('Registration submitted successfully! Thank you.');
+
+  const genderEl = document.querySelector('input[name="gender"]:checked');
+
+  const data = {
+    registrationType: "individual",
+    participantName: document.getElementById('participantName').value.trim(),
+    dob: dob.value,
+    age: age.value,
+    gender: genderEl ? genderEl.value : '',
+    classGrade: document.getElementById('classGrade').value,
+    schoolName: document.getElementById('schoolName').value.trim(),
+    category: document.getElementById('category').value,
+    parentName: document.getElementById('parentName').value.trim(),
+    contactNumber: document.getElementById('contactNumber').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    declaration: document.getElementById('declaration').checked,
+    createdAt: serverTimestamp()
+  };
+
+  submitBtn.disabled = true;
+  const originalText = submitBtn.innerHTML;
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+  try {
+    await addDoc(collection(db, 'game_reg'), data);
+    alert('Registration submitted successfully! Thank you.');
+    form.reset();
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Failed to submit. Please try again.');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalText;
+  }
 });
 </script>
 
