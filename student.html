@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Individual Registration | Kurukshetra-2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Poppins',sans-serif;background:#f5f3ec;color:#1d2b28;line-height:1.5}
+
+/* ----- Header ----- */
+.reg-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 28px;background:#fff;border-bottom:2px solid #004d3e;
+  flex-wrap:wrap;gap:10px;
+}
+.reg-header .left{display:flex;align-items:center;gap:14px}
+.reg-header .left img{height:60px}
+.reg-header .right{display:flex;align-items:center;gap:18px}
+.reg-header .right img{height:60px}
+.reg-header .right .kurukshetra{
+  font-size:30px;font-weight:700;color:#b8860b;
+  font-style:italic;text-shadow:1px 1px 2px rgba(0,0,0,.2);
+}
+
+/* ----- Title Bar ----- */
+.title-bar{
+  background:#004d3e;color:#fff;text-align:center;
+  padding:10px;font-size:20px;font-weight:600;letter-spacing:.5px;
+}
+
+/* ----- Form wrapper ----- */
+.form-wrap{max-width:1100px;margin:24px auto;padding:0 20px}
+
+/* ----- Big heading ----- */
+.big-heading{
+  background:linear-gradient(135deg,#004d3e,#00695c);
+  color:#fff;text-align:center;font-size:26px;font-weight:700;
+  padding:16px;border-radius:40px;display:flex;align-items:center;
+  justify-content:center;gap:14px;max-width:540px;margin:0 auto 32px;
+  box-shadow:0 6px 18px rgba(0,77,62,.25);
+}
+.big-heading i{font-size:28px}
+
+/* ----- Section ----- */
+.section{
+  background:#fff;border:1.5px solid #5fa89a;border-radius:14px;
+  margin-bottom:26px;overflow:hidden;
+}
+.section-head{
+  background:linear-gradient(135deg,#004d3e,#00695c);
+  color:#fff;padding:12px 22px;font-size:20px;font-weight:600;
+  display:inline-flex;align-items:center;gap:10px;
+  border-bottom-right-radius:14px;
+}
+.section-body{padding:26px 28px}
+
+/* ----- Form rows ----- */
+.row{
+  display:grid;grid-template-columns:240px 1fr;
+  gap:16px;align-items:center;margin-bottom:18px;
+}
+.row label{font-weight:600;font-size:15px;color:#1d2b28}
+.row label .req{color:#d21f3c}
+.row input[type=text],
+.row input[type=number],
+.row input[type=date],
+.row input[type=email],
+.row input[type=tel],
+.row select{
+  width:100%;padding:11px 14px;border:1.5px solid #b9c3bf;
+  border-radius:8px;font-size:15px;font-family:inherit;
+  background:#fff;transition:border-color .2s,box-shadow .2s;
+}
+.row input:focus,.row select:focus{
+  outline:none;border-color:#00695c;
+  box-shadow:0 0 0 3px rgba(0,105,92,.15);
+}
+.dob-age{display:flex;gap:18px;align-items:center}
+.dob-age .age-box{display:flex;align-items:center;gap:10px;min-width:200px}
+.dob-age .age-box label{font-weight:600}
+
+/* ----- Gender ----- */
+.gender-group{display:flex;gap:30px;flex-wrap:wrap}
+.gender-group label{
+  display:flex;align-items:center;gap:8px;font-weight:500;cursor:pointer;
+}
+.gender-group input{width:18px;height:18px;accent-color:#00695c}
+
+/* ----- Category info ----- */
+.cat-row{display:flex;align-items:center;gap:10px}
+.info-icon{
+  width:24px;height:24px;border-radius:50%;background:#00695c;color:#fff;
+  display:inline-flex;align-items:center;justify-content:center;font-size:13px;
+  cursor:pointer;flex-shrink:0;
+}
+
+/* ----- Input with icon ----- */
+.input-icon{position:relative}
+.input-icon i{
+  position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  color:#888;font-size:16px;
+}
+.input-icon input{padding-left:40px !important}
+
+/* ----- Declaration ----- */
+.declare-row{display:flex;gap:14px;align-items:flex-start}
+.declare-row input{width:22px;height:22px;margin-top:3px;accent-color:#00695c;flex-shrink:0}
+.declare-row p{font-size:15px;color:#333}
+
+/* ----- Buttons ----- */
+.btn-row{display:flex;justify-content:center;gap:22px;margin:30px 0 50px;flex-wrap:wrap}
+.btn-submit{
+  background:linear-gradient(135deg,#008844,#006633);
+  color:#fff;border:none;padding:14px 38px;border-radius:40px;
+  font-size:18px;font-weight:600;cursor:pointer;
+  display:inline-flex;align-items:center;gap:10px;
+  box-shadow:0 6px 16px rgba(0,136,68,.3);transition:transform .2s;
+}
+.btn-submit:hover{transform:translateY(-2px)}
+.btn-download{
+  background:linear-gradient(135deg,#2e7bd3,#1e5fa8);
+  color:#fff;border:none;padding:14px 38px;border-radius:40px;
+  font-size:18px;font-weight:600;cursor:pointer;
+  display:inline-flex;align-items:center;gap:10px;
+  box-shadow:0 6px 16px rgba(46,123,211,.3);transition:transform .2s;
+}
+.btn-download:hover{transform:translateY(-2px)}
+
+/* ----- Footer ----- */
+.reg-footer{
+  background:#004d3e;color:#c5e0d7;padding:26px 20px;text-align:center;
+  border-top:5px solid #c5a059;
+}
+.reg-footer .pieces{
+  font-size:28px;color:#c5a059;letter-spacing:12px;margin-bottom:10px;
+}
+.reg-footer p{font-size:13px;opacity:.85}
+
+/* ----- Responsive ----- */
+@media(max-width:760px){
+  .reg-header{flex-direction:column;text-align:center}
+  .reg-header .right{flex-direction:column;gap:8px}
+  .title-bar{font-size:15px}
+  .big-heading{font-size:20px;padding:12px}
+  .row{grid-template-columns:1fr;gap:6px}
+  .dob-age{flex-direction:column;align-items:stretch;gap:12px}
+  .dob-age .age-box{min-width:auto}
+  .section-body{padding:18px}
+  .btn-submit,.btn-download{width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<header class="reg-header">
+  <div class="left">
+    <img src="images/logo.png" alt="Anandhavruksham">
+  </div>
+  <div class="right">
+    <span class="kurukshetra">Kurukshetra-2026</span>
+    <img src="images/Chess_logo.png" alt="Chess Tournament">
+  </div>
+</header>
+
+<div class="title-bar">Tamilnadu Open state Level INTER-SCHOOL CHESS TOURNAMENT</div>
+
+<div class="form-wrap">
+  <div class="big-heading">
+    <i class="fas fa-user"></i>
+    Individual Registration Form
+  </div>
+
+  <form id="regForm">
+    <!-- Participant Details -->
+    <div class="section">
+      <div class="section-head">
+        <i class="fas fa-users"></i> Participant Details
+      </div>
+      <div class="section-body">
+        <div class="row">
+          <label>Participant Name <span class="req">*</span></label>
+          <input type="text" required placeholder="Enter full name">
+        </div>
+
+        <div class="row">
+          <label>Date of Birth <span class="req">*</span></label>
+          <div class="dob-age">
+            <input type="date" id="dob" required style="width:260px">
+            <div class="age-box">
+              <label>Age <span class="req">*</span></label>
+              <input type="number" id="age" required placeholder="Years" min="3" max="100" style="width:120px">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>Gender <span class="req">*</span></label>
+          <div class="gender-group">
+            <label><input type="radio" name="gender" value="male" required> Male</label>
+            <label><input type="radio" name="gender" value="female"> Female</label>
+            <label><input type="radio" name="gender" value="other"> Other</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>Class / Grade <span class="req">*</span></label>
+          <select required>
+            <option value="">Select Class / Grade</option>
+            <option>LKG</option><option>UKG</option>
+            <option>Class 1</option><option>Class 2</option><option>Class 3</option>
+            <option>Class 4</option><option>Class 5</option><option>Class 6</option>
+            <option>Class 7</option><option>Class 8</option><option>Class 9</option>
+            <option>Class 10</option><option>Class 11</option><option>Class 12</option>
+            <option>College</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <label>School Name <span class="req">*</span></label>
+          <input type="text" required placeholder="Enter your school name">
+        </div>
+
+        <div class="row">
+          <label>Category / Group <span class="req">*</span></label>
+          <div class="cat-row">
+            <select required style="flex:1">
+              <option value="">Select Category / Group</option>
+              <option>Under-7</option>
+              <option>Under-9</option>
+              <option>Under-11</option>
+              <option>Under-13</option>
+              <option>Under-15</option>
+              <option>Open Category</option>
+            </select>
+            <span class="info-icon" title="Age as on tournament date"><i class="fas fa-info"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Parent / Guardian Details -->
+    <div class="section">
+      <div class="section-head">
+        <i class="fas fa-users"></i> Parent / Guardian Details
+      </div>
+      <div class="section-body">
+        <div class="row">
+          <label>Parent / Guardian Name <span class="req">*</span></label>
+          <input type="text" required placeholder="Enter name">
+        </div>
+
+        <div class="row">
+          <label>Contact Number <span class="req">*</span></label>
+          <div class="input-icon">
+            <i class="fas fa-phone"></i>
+            <input type="tel" required placeholder="Enter mobile number">
+          </div>
+        </div>
+
+        <div class="row">
+          <label>Email <span style="color:#888">(Optional)</span></label>
+          <div class="input-icon">
+            <i class="fas fa-envelope"></i>
+            <input type="email" placeholder="Enter email address">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Declaration -->
+    <div class="section">
+      <div class="section-head">
+        <i class="fas fa-check-square"></i> Declaration
+      </div>
+      <div class="section-body">
+        <div class="declare-row">
+          <input type="checkbox" id="declaration" required>
+          <p>I hereby declare that the above information is true and correct. I agree to abide by the rules and regulations of the Kurukshetra - 2026 Chess Tournament.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="btn-row">
+      <button type="submit" class="btn-submit">
+        <i class="fas fa-paper-plane"></i> Submit Registration
+      </button>
+      <button type="button" class="btn-download" onclick="window.print()">
+        <i class="fas fa-download"></i> Download Form
+      </button>
+    </div>
+  </form>
+</div>
+
+<footer class="reg-footer">
+  <div class="pieces">
+    <i class="fas fa-chess-rook"></i>
+    <i class="fas fa-chess-knight"></i>
+    <i class="fas fa-chess-bishop"></i>
+    <i class="fas fa-chess-queen"></i>
+    <i class="fas fa-chess-pawn"></i>
+  </div>
+  <p>Anandhavruksham International School of Fine Arts &copy; 2026</p>
+</footer>
+
+<script>
+// Auto-calculate age from DOB
+const dob = document.getElementById('dob');
+const age = document.getElementById('age');
+if(dob){
+  dob.addEventListener('change',()=>{
+    if(!dob.value)return;
+    const bd=new Date(dob.value);
+    const diff=Date.now()-bd.getTime();
+    const years=Math.floor(diff/(1000*60*60*24*365.25));
+    if(years>=0) age.value=years;
+  });
+}
+// Form submit
+document.getElementById('regForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  alert('Registration submitted successfully! Thank you.');
+});
+</script>
+
+</body>
+</html>
