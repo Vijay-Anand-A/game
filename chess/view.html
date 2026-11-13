@@ -30,12 +30,24 @@
             align-items: center;
         }
         .page-header h1 { margin: 0; font-size: 22px; }
+        .header-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
         .page-header .count {
             background: rgba(255,255,255,0.15);
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 14px;
         }
+        .pdf-btn {
+            background: var(--accent-gold);
+            color: #3a2c00;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .pdf-btn:hover { background: #d9b876; }
         .table-wrapper {
             max-width: 1200px;
             margin: 0 auto;
@@ -205,7 +217,10 @@
 
     <div class="page-header">
         <h1>🏆 Registrations - Chess Tournament</h1>
-        <div class="count" id="totalCount">Total: 0</div>
+        <div class="header-right">
+            <div class="count" id="totalCount">Total: 0</div>
+            <button class="pdf-btn" onclick="studentPdf()">📄 Student PDF</button>
+        </div>
     </div>
 
     <div class="table-wrapper">
@@ -433,6 +448,119 @@
 
         window.closeModal = function () {
             document.getElementById('modal').classList.remove('active');
+        };
+
+        window.studentPdf = function () {
+            const list = [];
+            registrations.forEach(reg => {
+                if (reg.registrationType === 'individual') {
+                    list.push({
+                        name: reg.participantName || '',
+                        school: reg.schoolName || '',
+                        cls: reg.classGrade || '',
+                        under: reg.category || '',
+                        contact: reg.contactNumber || '',
+                        dob: reg.dob || ''
+                    });
+                } else {
+                    const cats = (reg.categories || []).join(', ');
+                    (reg.participants || []).forEach(p => {
+                        list.push({
+                            name: p.name || '',
+                            school: reg.schoolNameAddress || '',
+                            cls: p.classSec || '',
+                            under: cats,
+                            contact: reg.coachContact || reg.principalContact || '',
+                            dob: p.dob || ''
+                        });
+                    });
+                }
+            });
+
+            if (list.length === 0) {
+                alert('No student records found.');
+                return;
+            }
+
+            const base = location.href.replace(/[^/]*$/, '');
+            const rows = list.map((r, i) => `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td class="left">${escapeHtml(r.name)}</td>
+                    <td class="left">${escapeHtml(r.school)}</td>
+                    <td>${escapeHtml(r.cls)}</td>
+                    <td>${escapeHtml(r.under)}</td>
+                    <td>${escapeHtml(r.contact)}</td>
+                    <td>${escapeHtml(r.dob)}</td>
+                </tr>`).join('');
+
+            const win = window.open('', '_blank');
+            if (!win) {
+                alert('Please allow pop-ups to view the student list.');
+                return;
+            }
+
+            win.document.write(`<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student List - Chess Tournament</title>
+<style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 15px; color: #222; }
+    .head { display: flex; justify-content: space-between; align-items: center; }
+    .head img { height: 55px; }
+    .head .mid { flex: 1; text-align: center; }
+    .head .mid img { height: 45px; }
+    .school-info { background: #004d3e; color: #fff; text-align: center; font-size: 11px; padding: 6px; line-height: 1.4; margin-top: 8px; border-radius: 0 0 40% 40% / 0 0 30% 30%; }
+    h2 { text-align: center; font-size: 17px; margin: 14px 0 10px; color: #004d3e; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #004d3e; padding: 5px 6px; font-size: 12px; text-align: center; }
+    th { background: #004d3e; color: #fff; }
+    td.left { text-align: left; }
+    tbody tr:nth-child(even) { background: #f5faf8; }
+    .actions { text-align: center; margin: 18px 0; }
+    .actions button { background: #004d3e; color: #fff; border: none; padding: 10px 24px; border-radius: 25px; font-size: 14px; font-weight: bold; cursor: pointer; }
+    @page { size: A4; margin: 10mm; }
+    @media print {
+        .actions { display: none; }
+        th, .school-info { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        thead { display: table-header-group; }
+        tr { page-break-inside: avoid; }
+    }
+</style>
+</head>
+<body>
+    <div class="head">
+        <img src="${base}img/anand_vruk_logo.png" alt="Logo">
+        <div class="mid"><img src="${base}img/kurushetra.png" alt="Kurushetra"></div>
+        <img src="${base}img/chess_tour_logo.png" alt="Chess Tournament">
+    </div>
+    <div class="school-info">
+        <div>Dr. Radhakrishnan Street, Tirutani - 631209. Thiruvallur Dist., Tamilnadu.</div>
+        <div>www.anandhavruksham.org | E-mail: anandhavruksham.music@gmail.com | Ph: 9962999106, 9500495449</div>
+    </div>
+    <h2>Student List - Chess Tournament</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width:45px;">Sl.no</th>
+                <th>Student Name</th>
+                <th>School</th>
+                <th style="width:80px;">Class</th>
+                <th style="width:110px;">Under</th>
+                <th style="width:110px;">Contact</th>
+                <th style="width:95px;">DOB</th>
+            </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+    </table>
+    <div class="actions"><button onclick="window.print()">🖨 Print / Save as PDF</button></div>
+</body>
+</html>`);
+            win.document.close();
+            win.focus();
+            setTimeout(() => win.print(), 500);
         };
 
         document.getElementById('modal').addEventListener('click', (e) => {
