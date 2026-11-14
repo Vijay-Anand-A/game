@@ -272,7 +272,115 @@ nav {
     border: 3px solid #c5a059;
 }
 
-/* Courses Section */
+/* News & Announcements Section */
+.news-section {
+    padding: 40px 0 60px;
+    background-color: #fff;
+}
+
+.news-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.news-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+}
+
+.news-icon {
+    color: var(--primary-red);
+    font-size: 32px;
+}
+
+.news-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    color: var(--primary-green);
+    margin: 0;
+}
+
+.news-underline {
+    position: absolute;
+    bottom: -8px;
+    left: 44px;
+    width: 80%;
+    height: 3px;
+    background-color: var(--gold);
+    border-radius: 2px;
+}
+
+.view-all-news {
+    background-color: #fff3f3;
+    color: var(--primary-red);
+    text-decoration: none;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+    border: 1px solid #f5c2c2;
+}
+
+.view-all-news:hover {
+    background-color: var(--primary-red);
+    color: #fff;
+}
+
+.news-carousel {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    border: 2px solid #e0e0e0;
+}
+
+.news-slides {
+    display: flex;
+    transition: transform 0.6s ease-in-out;
+}
+
+.news-slide {
+    min-width: 100%;
+}
+
+.news-slide img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    display: block;
+}
+
+.news-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.news-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.news-dot.active {
+    background-color: var(--primary-green);
+}
+
+
 .courses-section {
     padding: 80px 0;
     background-color: #fff;
@@ -488,5 +596,29 @@ nav {
     .reg-arrow {
         font-size: 16px;
     }
-}
+
+    /* News section mobile */
+    .news-section {
+        padding: 25px 0 40px;
+    }
+    .news-icon {
+        font-size: 24px;
+    }
+    .news-title {
+        font-size: 20px;
+    }
+    .news-underline {
+        left: 36px;
+    }
+    .view-all-news {
+        font-size: 13px;
+        padding: 6px 14px;
+    }
+    .news-slide img {
+        height: 180px;
+    }
+    .news-dot {
+        width: 10px;
+        height: 10px;
+    }
 }
