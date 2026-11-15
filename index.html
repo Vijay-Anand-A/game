@@ -79,17 +79,32 @@
 
     <section class="check-section">
         <div class="container">
-            <div class="check-card">
-                <div class="check-head">
-                    <i class="fas fa-magnifying-glass"></i>
-                    <h2>Check Your Registration</h2>
+            <div class="check-layout">
+                <div class="check-card">
+                    <div class="check-head">
+                        <i class="fas fa-magnifying-glass"></i>
+                        <h2>Check Your Registration</h2>
+                    </div>
+                    <p class="check-desc">Already registered? Enter the mobile number you used during registration and click View to download your registration.</p>
+                    <div class="check-form">
+                        <input type="tel" id="checkMobile" inputmode="numeric" placeholder="Enter registered mobile number" maxlength="15">
+                        <button class="check-btn" id="checkBtn"><i class="fas fa-eye"></i> View</button>
+                    </div>
+                    <div class="check-result" id="checkResult"></div>
                 </div>
-                <p class="check-desc">Already registered? Enter the mobile number you used during registration and click View to download your registration.</p>
-                <div class="check-form">
-                    <input type="tel" id="checkMobile" inputmode="numeric" placeholder="Enter registered mobile number" maxlength="15">
-                    <button class="check-btn" id="checkBtn"><i class="fas fa-eye"></i> View</button>
+
+                <aside class="payment-card" aria-labelledby="paymentTitle">
+                    <div class="payment-head">
+                        <i class="fas fa-lock"></i>
+                        <h2 id="paymentTitle">Pay Registration Fee</h2>
+                    </div>
+                    <p class="payment-desc">Scan this QR code using any UPI app to make your payment.</p>
+                    <img class="payment-qr" src="images/QR.jpeg" alt="UPI payment QR code for sathya94gs@okaxis">
+                    <div class="upi-details">
+                        <span class="upi-label">UPI ID</span>
+                        <strong>sathya94gs@okaxis</strong>
+                    </div>
                 </div>
-                <div class="check-result" id="checkResult"></div>
             </div>
         </div>
     </section>

@@ -278,15 +278,24 @@ nav {
     background-color: #fff;
 }
 
+.check-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.75fr);
+    align-items: stretch;
+    gap: 24px;
+}
+
 .check-card {
-    max-width: 780px;
-    margin: 0 auto;
+    min-width: 0;
     background: linear-gradient(135deg, #f6fbf9 0%, #eef7f4 100%);
     border: 2px solid #cfe4de;
     border-radius: 20px;
     padding: 28px 30px;
     box-shadow: 0 8px 22px rgba(0,0,0,0.06);
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .check-head {
@@ -374,6 +383,76 @@ nav {
 .check-result.error { color: var(--primary-red); }
 .check-result.info { color: var(--text-light); font-weight: 500; }
 .check-result.success { color: #1b7a45; }
+
+.payment-card {
+    background: #fff;
+    border: 2px solid #ead9b5;
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.07);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.payment-head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    color: var(--primary-green);
+}
+
+.payment-head i {
+    color: var(--gold);
+    font-size: 19px;
+}
+
+.payment-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 21px;
+    margin: 0;
+}
+
+.payment-desc {
+    margin: 6px 0 12px;
+    color: var(--text-light);
+    font-size: 13px;
+}
+
+.payment-qr {
+    width: min(100%, 210px);
+    aspect-ratio: 1;
+    object-fit: contain;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    background: #f7f8fa;
+}
+
+.upi-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 12px;
+    padding: 9px 16px;
+    border-radius: 12px;
+    background: #f3f8f5;
+}
+
+.upi-label {
+    color: var(--text-light);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.upi-details strong {
+    color: var(--primary-green);
+    font-size: 16px;
+    overflow-wrap: anywhere;
+}
 
 /* News & Announcements Section */
 .news-section {
@@ -703,9 +782,19 @@ nav {
     .check-section {
         padding: 5px 0 35px;
     }
+    .check-layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
     .check-card {
         padding: 22px 16px;
         border-radius: 16px;
+    }
+    .payment-card {
+        padding: 20px 16px;
+    }
+    .payment-qr {
+        width: min(100%, 230px);
     }
     .check-head h2 {
         font-size: 20px;
