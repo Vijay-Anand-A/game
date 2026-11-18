@@ -450,26 +450,47 @@
             document.getElementById('modal').classList.remove('active');
         };
 
+        const PDF_CATEGORIES = ['UNDER-8', 'UNDER-11', 'UNDER-13', 'UNDER-15'];
+
+        const normalizeGender = (value) => {
+            const v = String(value == null ? '' : value).trim().toLowerCase();
+            if (v === 'boy' || v === 'male' || v === 'm') return 'Male';
+            if (v === 'girl' || v === 'female' || v === 'f') return 'Female';
+            return '';
+        };
+
+        const normalizeCategory = (value) => {
+            const v = String(value == null ? '' : value).toUpperCase().replace(/[^A-Z0-9]/g, '');
+            const match = v.match(/^UNDER0*(\d+)$/);
+            return match ? 'UNDER-' + match[1] : '';
+        };
+
         window.studentPdf = function () {
             const list = [];
             registrations.forEach(reg => {
                 if (reg.registrationType === 'individual') {
+                    const cat = normalizeCategory(reg.category);
                     list.push({
                         name: reg.participantName || '',
                         school: reg.schoolName || '',
                         cls: reg.classGrade || '',
                         under: reg.category || '',
+                        cats: cat ? [cat] : [],
+                        gender: normalizeGender(reg.gender),
                         contact: reg.contactNumber || '',
                         dob: reg.dob || ''
                     });
                 } else {
-                    const cats = (reg.categories || []).join(', ');
+                    const cats = (reg.categories || []).map(c => String(c).trim()).filter(Boolean);
+                    const catKeys = cats.map(normalizeCategory).filter(Boolean);
                     (reg.participants || []).forEach(p => {
                         list.push({
                             name: p.name || '',
                             school: reg.schoolNameAddress || '',
                             cls: p.classSec || '',
-                            under: cats,
+                            under: cats.join(', '),
+                            cats: catKeys,
+                            gender: normalizeGender(p.gender),
                             contact: reg.coachContact || reg.principalContact || '',
                             dob: p.dob || ''
                         });
@@ -482,11 +503,31 @@
                 return;
             }
 
+            const summary = {
+                total: list.length,
+                male: list.filter(r => r.gender === 'Male').length,
+                female: list.filter(r => r.gender === 'Female').length,
+                categories: PDF_CATEGORIES.map(c => ({
+                    label: c,
+                    count: list.filter(r => r.cats.includes(c)).length
+                }))
+            };
+
+            const summaryHtml = `
+                <div class="summary">
+                    <div class="sum-item"><span class="sum-lbl">Total Students</span><span class="sum-val">${summary.total}</span></div>
+                    <div class="sum-item"><span class="sum-lbl">Total Male</span><span class="sum-val">${summary.male}</span></div>
+                    <div class="sum-item"><span class="sum-lbl">Total Female</span><span class="sum-val">${summary.female}</span></div>
+                    ${summary.categories.map(c => `
+                    <div class="sum-item"><span class="sum-lbl">${c.label}</span><span class="sum-val">${c.count}</span></div>`).join('')}
+                </div>`;
+
             const base = location.href.replace(/[^/]*$/, '');
             const rows = list.map((r, i) => `
                 <tr>
                     <td>${i + 1}</td>
                     <td class="left">${escapeHtml(r.name)}</td>
+                    <td>${escapeHtml(r.gender) || '-'}</td>
                     <td class="left">${escapeHtml(r.school)}</td>
                     <td>${escapeHtml(r.cls)}</td>
                     <td>${escapeHtml(r.under)}</td>
@@ -519,14 +560,29 @@
     th { background: #004d3e; color: #fff; }
     td.left { text-align: left; }
     tbody tr:nth-child(even) { background: #f5faf8; }
+    .summary { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .sum-item {
+        flex: 1 1 140px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        border: 1px solid #004d3e;
+        border-left: 5px solid #c5a059;
+        border-radius: 8px;
+        padding: 8px 14px;
+        background: #f5faf8;
+    }
+    .sum-lbl { font-size: 12px; font-weight: 600; color: #004d3e; }
+    .sum-val { font-size: 16px; font-weight: bold; color: #d21f3c; }
     .actions { text-align: center; margin: 18px 0; }
     .actions button { background: #004d3e; color: #fff; border: none; padding: 10px 24px; border-radius: 25px; font-size: 14px; font-weight: bold; cursor: pointer; }
     @page { size: A4; margin: 10mm; }
     @media print {
         .actions { display: none; }
-        th, .school-info { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        th, .school-info, .sum-item { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         thead { display: table-header-group; }
-        tr { page-break-inside: avoid; }
+        tr, .summary { page-break-inside: avoid; }
     }
 </style>
 </head>
@@ -544,17 +600,19 @@
     <table>
         <thead>
             <tr>
-                <th style="width:45px;">Sl.no</th>
+                <th style="width:40px;">Sl.no</th>
                 <th>Student Name</th>
+                <th style="width:65px;">Gender</th>
                 <th>School</th>
-                <th style="width:80px;">Class</th>
-                <th style="width:110px;">Under</th>
-                <th style="width:110px;">Contact</th>
-                <th style="width:95px;">DOB</th>
+                <th style="width:70px;">Class</th>
+                <th style="width:100px;">Under</th>
+                <th style="width:100px;">Contact</th>
+                <th style="width:85px;">DOB</th>
             </tr>
         </thead>
         <tbody>${rows}</tbody>
     </table>
+    ${summaryHtml}
     <div class="actions"><button onclick="window.print()">🖨 Print / Save as PDF</button></div>
 </body>
 </html>`);
