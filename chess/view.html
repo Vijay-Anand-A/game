@@ -86,6 +86,7 @@
         }
         .status.paid { background: #d4edda; color: #155724; }
         .status.unpaid { background: #f8d7da; color: #721c24; }
+        .registered-on { font-size: 13px; color: #555; white-space: nowrap; }
         .type-badge {
             display: inline-block;
             padding: 4px 12px;
@@ -232,11 +233,12 @@
                     <th>Name</th>
                     <th style="width: 120px;">Student Count</th>
                     <th style="width: 130px;">Fee Status</th>
+                    <th style="width: 175px;">Registered On</th>
                     <th style="width: 120px;">Action</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
-                <tr><td colspan="6" class="loading">Loading...</td></tr>
+                <tr><td colspan="7" class="loading">Loading...</td></tr>
             </tbody>
         </table>
     </div>
@@ -285,6 +287,31 @@
             return div.innerHTML;
         }
 
+        const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+        function toDate(value) {
+            if (!value) return null;
+            if (typeof value.toDate === 'function') return value.toDate();
+            if (typeof value.seconds === 'number') return new Date(value.seconds * 1000);
+            if (typeof value === 'string' || typeof value === 'number') {
+                const parsed = new Date(value);
+                return isNaN(parsed.getTime()) ? null : parsed;
+            }
+            return null;
+        }
+
+        // ഉദാ: Nov 20 Mon, 11:20 AM
+        function formatRegisteredAt(value) {
+            const date = toDate(value);
+            if (!date) return '-';
+            let hours = date.getHours();
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const period = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12;
+            return `${MONTH_NAMES[date.getMonth()]} ${date.getDate()} ${DAY_NAMES[date.getDay()]}, ${hours}:${minutes} ${period}`;
+        }
+
         async function loadData() {
             try {
                 const snap = await getDocs(collection(db, 'game_reg'));
@@ -303,14 +330,14 @@
                 renderTable();
             } catch (error) {
                 console.error('Error loading:', error);
-                tableBody.innerHTML = '<tr><td colspan="6" class="empty">Error loading data. Check Firestore rules.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="7" class="empty">Error loading data. Check Firestore rules.</td></tr>';
             }
         }
 
         function renderTable() {
             totalCount.textContent = 'Total: ' + registrations.length;
             if (registrations.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="6" class="empty">No registrations found.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="7" class="empty">No registrations found.</td></tr>';
                 return;
             }
             tableBody.innerHTML = registrations.map((reg, i) => {
@@ -332,6 +359,7 @@
                                 ${paid ? '✓ Paid' : '✕ Unpaid'}
                             </span>
                         </td>
+                        <td class="registered-on">${escapeHtml(formatRegisteredAt(reg.createdAt))}</td>
                         <td>
                             <button class="view-btn" onclick="openModal('${reg.id}')">👁 View</button>
                             <i class="del-icon" onclick="deleteRow('${reg.id}')">🗑</i>
