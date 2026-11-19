@@ -262,6 +262,31 @@
             checkResult.textContent = message;
         }
 
+        const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+        function toDate(value) {
+            if (!value) return null;
+            if (typeof value.toDate === 'function') return value.toDate();
+            if (typeof value.seconds === 'number') return new Date(value.seconds * 1000);
+            if (typeof value === 'string' || typeof value === 'number') {
+                const parsed = new Date(value);
+                return isNaN(parsed.getTime()) ? null : parsed;
+            }
+            return null;
+        }
+
+        // ഉദാ: Nov 20 Mon, 11:20 AM
+        function formatRegisteredAt(value) {
+            const date = toDate(value);
+            if (!date) return '';
+            let hours = date.getHours();
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const period = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12;
+            return `${MONTH_NAMES[date.getMonth()]} ${date.getDate()} ${DAY_NAMES[date.getDay()]}, ${hours}:${minutes} ${period}`;
+        }
+
         function detailRow(label, value) {
             return `<div class="d-row"><div class="d-lbl">${label}</div><div class="d-val">${escapeHtml(value) || '-'}</div></div>`;
         }
@@ -287,6 +312,7 @@
                     inner += detailRow('Parent / Guardian Name', reg.parentName);
                     inner += detailRow('Contact Number', reg.contactNumber);
                     inner += detailRow('Email', reg.email);
+                    inner += detailRow('Registered On', formatRegisteredAt(reg.createdAt));
                 } else {
                     const categories = (reg.categories || []).join(', ');
                     const participants = reg.participants || [];
@@ -297,6 +323,7 @@
                     inner += detailRow('Contact Number', reg.principalContact);
                     inner += detailRow('Name of the P.D/P.E.T/ Coach', reg.coachName);
                     inner += detailRow('Contact Number', reg.coachContact);
+                    inner += detailRow('Registered On', formatRegisteredAt(reg.createdAt));
 
                     let rows = '';
                     participants.forEach((p, i) => {

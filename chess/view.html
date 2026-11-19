@@ -506,7 +506,8 @@
                         cats: cat ? [cat] : [],
                         gender: normalizeGender(reg.gender),
                         contact: reg.contactNumber || '',
-                        dob: reg.dob || ''
+                        dob: reg.dob || '',
+                        registeredAt: reg.createdAt
                     });
                 } else {
                     const cats = (reg.categories || []).map(c => String(c).trim()).filter(Boolean);
@@ -520,7 +521,8 @@
                             cats: catKeys,
                             gender: normalizeGender(p.gender),
                             contact: reg.coachContact || reg.principalContact || '',
-                            dob: p.dob || ''
+                            dob: p.dob || '',
+                            registeredAt: reg.createdAt
                         });
                     });
                 }
@@ -561,6 +563,7 @@
                     <td>${escapeHtml(r.under)}</td>
                     <td>${escapeHtml(r.contact)}</td>
                     <td>${escapeHtml(r.dob)}</td>
+                    <td class="nowrap">${escapeHtml(formatRegisteredAt(r.registeredAt))}</td>
                 </tr>`).join('');
 
             const win = window.open('', '_blank');
@@ -584,9 +587,10 @@
     .school-info { background: #004d3e; color: #fff; text-align: center; font-size: 11px; padding: 6px; line-height: 1.4; margin-top: 8px; border-radius: 0 0 40% 40% / 0 0 30% 30%; }
     h2 { text-align: center; font-size: 17px; margin: 14px 0 10px; color: #004d3e; }
     table { width: 100%; border-collapse: collapse; }
-    th, td { border: 1px solid #004d3e; padding: 5px 6px; font-size: 12px; text-align: center; }
+    th, td { border: 1px solid #004d3e; padding: 4px 5px; font-size: 11px; text-align: center; }
     th { background: #004d3e; color: #fff; }
     td.left { text-align: left; }
+    td.nowrap { white-space: nowrap; font-size: 10.5px; }
     tbody tr:nth-child(even) { background: #f5faf8; }
     .summary { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
     .sum-item {
@@ -635,7 +639,8 @@
                 <th style="width:70px;">Class</th>
                 <th style="width:100px;">Under</th>
                 <th style="width:100px;">Contact</th>
-                <th style="width:85px;">DOB</th>
+                <th style="width:80px;">DOB</th>
+                <th style="width:105px;">Registered On</th>
             </tr>
         </thead>
         <tbody>${rows}</tbody>
