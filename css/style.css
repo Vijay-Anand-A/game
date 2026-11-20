@@ -272,6 +272,32 @@ nav {
     border: 3px solid #c5a059;
 }
 
+/* Registration Closed (disabled buttons) */
+.reg-btn.disabled {
+    background: linear-gradient(135deg, #8a8a8a 0%, #6b6b6b 100%);
+    border: 3px solid #bdbdbd;
+    cursor: not-allowed;
+    opacity: 0.85;
+    filter: grayscale(0.3);
+}
+
+.reg-btn.disabled:hover {
+    transform: none;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.15);
+}
+
+.reg-closed-note {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #d21f3c;
+}
+
+.reg-closed-note i {
+    margin-right: 6px;
+}
+
 /* Check Registration Section */
 .check-section {
     padding: 10px 0 50px;
