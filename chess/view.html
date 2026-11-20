@@ -483,14 +483,21 @@
         // DOB-യിൽ നിന്ന് age കണക്കാക്കാൻ അടിസ്ഥാന തീയതി (01-01-2026)
         const AGE_CUTOFF = new Date(2026, 0, 1);
 
-        // DOB വിവിധ ഫോർമാറ്റുകളിൽ (YYYY-MM-DD, DD/MM/YYYY, DD-MM-YYYY) parse ചെയ്യുന്നു
+        // DOB വിവിധ ഫോർമാറ്റുകളിൽ (YYYY-MM-DD, DD/MM/YYYY, DD-MM-YYYY, DD.MM.YYYY) parse ചെയ്യുന്നു
         function parseDob(dob) {
             if (!dob) return null;
             const str = String(dob).trim();
+            const makeValidDate = (year, month, day) => {
+                const date = new Date(year, month - 1, day);
+                return date.getFullYear() === year &&
+                    date.getMonth() === month - 1 &&
+                    date.getDate() === day ? date : null;
+            };
+
             let m = str.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
-            if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
-            m = str.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
-            if (m) return new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1]));
+            if (m) return makeValidDate(Number(m[1]), Number(m[2]), Number(m[3]));
+            m = str.match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$/);
+            if (m) return makeValidDate(Number(m[3]), Number(m[2]), Number(m[1]));
             const parsed = new Date(str);
             return isNaN(parsed.getTime()) ? null : parsed;
         }
