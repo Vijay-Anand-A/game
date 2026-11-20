@@ -188,6 +188,19 @@ body{font-family:'Poppins',sans-serif;background:#f5f3ec;color:#1d2b28;line-heig
   .btn-row,.reg-footer{display:none !important}
   .info-icon{display:none}
 }
+.reg-closed-banner{
+  background:#d21f3c;
+  color:#fff;
+  text-align:center;
+  font-weight:700;
+  font-size:15px;
+  line-height:1.4;
+  padding:14px 18px;
+  border:2px solid #c5a059;
+  border-radius:10px;
+  margin-bottom:16px;
+}
+.reg-closed-banner i{margin-right:8px}
 </style>
 </head>
 <body>
@@ -205,6 +218,7 @@ body{font-family:'Poppins',sans-serif;background:#f5f3ec;color:#1d2b28;line-heig
 <div class="title-bar">Tamilnadu Open state Level INTER-SCHOOL CHESS TOURNAMENT</div>
 
 <div class="form-wrap">
+  <div class="reg-closed-banner"><i class="fas fa-lock"></i>Registration has been closed. New individual registrations are no longer accepted.</div>
   <div class="big-heading">
     <i class="fas fa-user"></i>
     Individual Registration Form
@@ -369,12 +383,27 @@ if (dob) {
   });
 }
 
+// Registration window closed - new submissions are blocked
+const REGISTRATION_CLOSED = true;
+
 // Form submit -> Firestore
 const form = document.getElementById('regForm');
 const submitBtn = document.getElementById('submitBtn');
 
+if (REGISTRATION_CLOSED) {
+  submitBtn.disabled = true;
+  submitBtn.style.opacity = '0.65';
+  submitBtn.style.cursor = 'not-allowed';
+  submitBtn.innerHTML = '<i class="fas fa-lock"></i> Registration Closed';
+}
+
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
+
+  if (REGISTRATION_CLOSED) {
+    alert('Registration has been closed. New registrations are no longer accepted.');
+    return;
+  }
 
   const genderEl = document.querySelector('input[name="gender"]:checked');
 
