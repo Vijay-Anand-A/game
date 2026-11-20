@@ -480,6 +480,45 @@
 
         const PDF_CATEGORIES = ['UNDER-8', 'UNDER-11', 'UNDER-13', 'UNDER-15'];
 
+        // DOB-യിൽ നിന്ന് age കണക്കാക്കാൻ അടിസ്ഥാന തീയതി (01-01-2026)
+        const AGE_CUTOFF = new Date(2026, 0, 1);
+
+        // DOB വിവിധ ഫോർമാറ്റുകളിൽ (YYYY-MM-DD, DD/MM/YYYY, DD-MM-YYYY) parse ചെയ്യുന്നു
+        function parseDob(dob) {
+            if (!dob) return null;
+            const str = String(dob).trim();
+            let m = str.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+            if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+            m = str.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+            if (m) return new Date(Number(m[3]), Number(m[2]) - 1, Number(m[1]));
+            const parsed = new Date(str);
+            return isNaN(parsed.getTime()) ? null : parsed;
+        }
+
+        // ഒരു നിശ്ചിത തീയതിക്ക് (AGE_CUTOFF) ശിഷ്ടമുള്ള പ്രായം കണക്കാക്കുന്നു
+        function ageAsOn(dob, asOn) {
+            if (!dob) return null;
+            let age = asOn.getFullYear() - dob.getFullYear();
+            const monthDiff = asOn.getMonth() - dob.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && asOn.getDate() < dob.getDate())) {
+                age--;
+            }
+            return age;
+        }
+
+        // DOB-യിൽ നിന്ന് Under group കണക്കാക്കുന്നു
+        function underGroupFromDob(dob) {
+            const d = parseDob(dob);
+            if (!d) return '';
+            const age = ageAsOn(d, AGE_CUTOFF);
+            if (age == null || age < 0) return '';
+            if (age < 8) return 'UNDER-8';
+            if (age < 11) return 'UNDER-11';
+            if (age < 13) return 'UNDER-13';
+            if (age < 15) return 'UNDER-15';
+            return 'OVER-15';
+        }
+
         const normalizeGender = (value) => {
             const v = String(value == null ? '' : value).trim().toLowerCase();
             if (v === 'boy' || v === 'male' || v === 'm') return 'Male';
@@ -487,38 +526,31 @@
             return '';
         };
 
-        const normalizeCategory = (value) => {
-            const v = String(value == null ? '' : value).toUpperCase().replace(/[^A-Z0-9]/g, '');
-            const match = v.match(/^UNDER0*(\d+)$/);
-            return match ? 'UNDER-' + match[1] : '';
-        };
-
         window.studentPdf = function () {
             const list = [];
             registrations.forEach(reg => {
                 if (reg.registrationType === 'individual') {
-                    const cat = normalizeCategory(reg.category);
+                    const under = underGroupFromDob(reg.dob);
                     list.push({
                         name: reg.participantName || '',
                         school: reg.schoolName || '',
                         cls: reg.classGrade || '',
-                        under: reg.category || '',
-                        cats: cat ? [cat] : [],
+                        under: under,
+                        cats: under && under !== 'OVER-15' ? [under] : [],
                         gender: normalizeGender(reg.gender),
                         contact: reg.contactNumber || '',
                         dob: reg.dob || '',
                         registeredAt: reg.createdAt
                     });
                 } else {
-                    const cats = (reg.categories || []).map(c => String(c).trim()).filter(Boolean);
-                    const catKeys = cats.map(normalizeCategory).filter(Boolean);
                     (reg.participants || []).forEach(p => {
+                        const under = underGroupFromDob(p.dob);
                         list.push({
                             name: p.name || '',
                             school: reg.schoolNameAddress || '',
                             cls: p.classSec || '',
-                            under: cats.join(', '),
-                            cats: catKeys,
+                            under: under,
+                            cats: under && under !== 'OVER-15' ? [under] : [],
                             gender: normalizeGender(p.gender),
                             contact: reg.coachContact || reg.principalContact || '',
                             dob: p.dob || '',
