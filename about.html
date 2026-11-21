@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Anandha Vruksham International School of Fine Arts</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ----- About Page Hero ----- */
+        .about-hero {
+            background: linear-gradient(135deg, #004d3e 0%, #00695c 50%, #00897b 100%);
+            color: #fff;
+            padding: 70px 0 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .about-hero::before {
+            content: "";
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 220px; height: 220px;
+            background: rgba(197, 160, 89, 0.18);
+            border-radius: 50%;
+        }
+        .about-hero::after {
+            content: "";
+            position: absolute;
+            bottom: -80px; left: -80px;
+            width: 260px; height: 260px;
+            background: rgba(210, 31, 60, 0.15);
+            border-radius: 50%;
+        }
+        .about-hero .container { position: relative; z-index: 1; }
+        .about-hero .eyebrow {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #c5a059;
+            margin-bottom: 12px;
+        }
+        .about-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 44px;
+            margin: 0 0 14px;
+            line-height: 1.15;
+        }
+        .about-hero h1 span { color: #c5a059; }
+        .about-hero p {
+            max-width: 720px;
+            margin: 0 auto;
+            font-size: 16px;
+            line-height: 1.7;
+            opacity: 0.95;
+        }
+
+        /* ----- Quick stat pills ----- */
+        .stat-pills {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 32px;
+        }
+        .stat-pill {
+            background: rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 30px;
+            padding: 10px 22px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .stat-pill i { color: #c5a059; margin-right: 6px; }
+
+        /* ----- Main content grid ----- */
+        .about-main {
+            padding: 60px 0;
+            background: linear-gradient(180deg, #f5faf8 0%, #ffffff 100%);
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 36px;
+            align-items: start;
+        }
+        .about-intro {
+            background: #fff;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0, 77, 62, 0.08);
+            border-top: 5px solid #d21f3c;
+        }
+        .about-intro h2 {
+            font-family: 'Playfair Display', serif;
+            color: #004d3e;
+            font-size: 28px;
+            margin: 0 0 16px;
+        }
+        .about-intro p {
+            color: #444;
+            font-size: 15.5px;
+            line-height: 1.8;
+            margin: 0 0 14px;
+        }
+
+        /* ----- Score bars ----- */
+        .scores-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 10px 30px rgba(0, 77, 62, 0.08);
+            border-top: 5px solid #c5a059;
+            position: sticky;
+            top: 90px;
+        }
+        .scores-card h3 {
+            margin: 0 0 20px;
+            color: #004d3e;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .score-item { margin-bottom: 20px; }
+        .score-item:last-child { margin-bottom: 0; }
+        .score-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .score-value { color: #d21f3c; }
+        .score-bar {
+            height: 12px;
+            background: #eef2f1;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .score-fill {
+            height: 100%;
+            border-radius: 10px;
+            width: 0;
+            transition: width 1.2s ease;
+        }
+        .fill-green  { background: linear-gradient(90deg, #00695c, #00897b); }
+        .fill-gold   { background: linear-gradient(90deg, #c5a059, #e0c177); }
+        .fill-red    { background: linear-gradient(90deg, #d21f3c, #e8556f); }
+
+        /* ----- Criteria cards ----- */
+        .criteria-section { padding: 0 0 70px; background: #fff; }
+        .criteria-section h2 {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            color: #004d3e;
+            font-size: 30px;
+            margin: 0 0 8px;
+        }
+        .criteria-section .sub {
+            text-align: center;
+            color: #777;
+            margin: 0 0 36px;
+            font-size: 15px;
+        }
+        .criteria-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+        .criteria-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 26px;
+            box-shadow: 0 8px 22px rgba(0, 77, 62, 0.07);
+            border-left: 6px solid;
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+        .criteria-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 30px rgba(0, 77, 62, 0.13);
+        }
+        .criteria-card.c-green  { border-left-color: #00695c; }
+        .criteria-card.c-red    { border-left-color: #d21f3c; }
+        .criteria-card.c-gold   { border-left-color: #c5a059; }
+        .criteria-card.c-blue   { border-left-color: #1565c0; }
+        .criteria-card.c-purple { border-left-color: #6a1b9a; }
+        .criteria-card.c-teal   { border-left-color: #00838f; }
+        .criteria-card .card-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .criteria-card .icon-badge {
+            width: 42px; height: 42px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .c-green  .icon-badge { background: linear-gradient(135deg, #00695c, #00897b); }
+        .c-red    .icon-badge { background: linear-gradient(135deg, #d21f3c, #e8556f); }
+        .c-gold   .icon-badge { background: linear-gradient(135deg, #c5a059, #e0c177); }
+        .c-blue   .icon-badge { background: linear-gradient(135deg, #1565c0, #42a5f5); }
+        .c-purple .icon-badge { background: linear-gradient(135deg, #6a1b9a, #ab47bc); }
+        .c-teal   .icon-badge { background: linear-gradient(135deg, #00838f, #26c6da); }
+        .criteria-card h4 {
+            margin: 0;
+            color: #004d3e;
+            font-size: 17px;
+        }
+        .criteria-card p {
+            margin: 0;
+            color: #555;
+            font-size: 14.5px;
+            line-height: 1.7;
+        }
+        .muted-note {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 12.5px;
+            color: #999;
+            font-style: italic;
+        }
+
+        /* ----- Responsive ----- */
+        @media (max-width: 900px) {
+            .about-grid { grid-template-columns: 1fr; }
+            .scores-card { position: static; }
+            .criteria-grid { grid-template-columns: 1fr; }
+            .about-hero h1 { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="site-header"></div>
+    <script src="js/include-header.js"></script>
+
+    <section class="about-hero">
+        <div class="container">
+            <span class="eyebrow"><i class="fas fa-music"></i> Know Us Better</span>
+            <h1>About <span>Anandha Vruksham</span></h1>
+            <p>A distinguished music institution in Thiruttani, Tamil Nadu, nurturing musical growth through personalised attention and a warm, motivating atmosphere.</p>
+            <div class="stat-pills">
+                <span class="stat-pill"><i class="fas fa-graduation-cap"></i> Expert Faculty</span>
+                <span class="stat-pill"><i class="fas fa-heart"></i> Friendly Approach</span>
+                <span class="stat-pill"><i class="fas fa-star"></i> High Quality</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-main">
+        <div class="container about-grid">
+            <div class="about-intro">
+                <h2>About Anandha Vruksham</h2>
+                <p>Anandha Vruksham is a distinguished music institution located in Thiruttani, Tamil Nadu. Renowned for its exceptional faculty, the academy focuses on fostering musical growth through personalized attention and support. Students appreciate the kind and friendly approach of Anand Sir, which creates a motivating atmosphere ideal for learning vocal music and other musical skills.</p>
+            </div>
+
+            <div class="scores-card">
+                <h3><i class="fas fa-chart-simple" style="color:#c5a059;"></i> Review Highlights</h3>
+
+                <div class="score-item">
+                    <div class="score-label"><span>Staff experience and expertise</span><span class="score-value">9</span></div>
+                    <div class="score-bar"><div class="score-fill fill-green" data-width="90"></div></div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-label"><span>Customer service</span><span class="score-value">8.5</span></div>
+                    <div class="score-bar"><div class="score-fill fill-gold" data-width="85"></div></div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-label"><span>Service quality</span><span class="score-value">9.5</span></div>
+                    <div class="score-bar"><div class="score-fill fill-red" data-width="95"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="criteria-section">
+        <div class="container">
+            <h2>Review Criteria</h2>
+            <p class="sub">What students and parents say across key areas</p>
+
+            <div class="criteria-grid">
+                <div class="criteria-card c-green">
+                    <div class="card-head">
+                        <div class="icon-badge"><i class="fas fa-dollar-sign"></i></div>
+                        <h4>Price</h4>
+                    </div>
+                    <p>No information in reviews about this criterion.</p>
+                    <span class="muted-note">Insufficient review data</span>
+                </div>
+
+                <div class="criteria-card c-red">
+                    <div class="card-head">
+                        <div class="icon-badge"><i class="fas fa-chalkboard-user"></i></div>
+                        <h4>Staff experience and expertise</h4>
+                    </div>
+                    <p>Users frequently highlight the highly skilled teachers at Anandha Vruksham who cater to individual student needs, indicating strong expertise in their fields.</p>
+                </div>
+
+                <div class="criteria-card c-gold">
+                    <div class="card-head">
+                        <div class="icon-badge"><i class="fas fa-headset"></i></div>
+                        <h4>Customer service</h4>
+                    </div>
+                    <p>The reviews emphasize Anand Sir's friendly demeanor and supportive nature, showcasing excellent customer service that enhances the learning experience.</p>
+                </div>
+
+                <div class="criteria-card c-blue">
+                    <div class="card-head">
+                        <div class="icon-badge"><i class="fas fa-shield-halved"></i></div>
+                        <h4>Reliability and responsibility</h4>
+                    </div>
+                    <p>There are no specific comments regarding reliability or responsibility mentioned in the reviews provided.</p>
+                </div>
+
+                <div class="criteria-card c-purple">
+                    <div class="card-head">
+                        <div class="icon-badge"><i class="fas fa-layer-group"></i></div>
+                        <h4>Product and service diversity</h4>
+                    </div>
+                    <p>No information in reviews about this criterion.</p>
+                    <span class="muted-note">Insufficient review data</span>
+                </div>
+
+                <div class="criteria-card c-teal">
+                    <div class="card-head">
+                        <div class="icon-badge"><i class="fas fa-award"></i></div>
+                        <h4>Service quality</h4>
+                    </div>
+                    <p>Many users commend the informative teaching methods employed by qualified instructors, reflecting high-quality educational experiences at the institution.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="contact-strip">
+        <div class="container footer-container">
+            <div class="footer-item">
+                <i class="fas fa-location-dot"></i>
+                <p>No.10, Dr. Radhakrishnan Street, Tirutani - 631209.<br>Thiruvallur Dist., Tamilnadu.</p>
+            </div>
+            <div class="footer-item">
+                <i class="fas fa-globe"></i>
+                <p>www.anandhavruksham.org</p>
+            </div>
+            <div class="footer-item">
+                <i class="fas fa-envelope"></i>
+                <p>anandhavruksham.music@gmail.com</p>
+            </div>
+            <div class="footer-item">
+                <i class="fas fa-phone"></i>
+                <p>9962999106, 9500495449</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/style.js"></script>
+    <script>
+        // Mark About nav link as active
+        document.addEventListener('DOMContentLoaded', () => {
+            const aboutLink = document.querySelector('.nav-about');
+            if (aboutLink) {
+                document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+                aboutLink.classList.add('active');
+            }
+        });
+
+        // Animate score bars after the header + layout settle
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelectorAll('.score-fill').forEach(bar => {
+                    bar.style.width = bar.dataset.width + '%';
+                });
+            }, 250);
+        });
+    </script>
+</body>
+</html>
