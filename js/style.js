@@ -5,6 +5,16 @@ function initUI() {
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navLinks = document.querySelector('.nav-links');
 
+    const currentPage = location.pathname.split('/').pop() || 'index.html';
+    const activeNavSelector = currentPage === 'about.html'
+        ? '.nav-about'
+        : currentPage === 'gallery.html'
+            ? '.nav-gallery'
+            : '.nav-home';
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.classList.toggle('active', link.matches(activeNavSelector));
+    });
+
     if (mobileMenuBtn && !mobileMenuBtn.dataset.menuBound) {
         mobileMenuBtn.dataset.menuBound = '1';
         mobileMenuBtn.addEventListener('click', () => {
@@ -48,7 +58,7 @@ function initUI() {
     });
 
     // Active link highlighting on scroll (home page only)
-    if (!window.__scrollSpyBound) {
+    if (currentPage === 'index.html' && !window.__scrollSpyBound) {
         window.__scrollSpyBound = true;
         window.addEventListener('scroll', () => {
             let current = '';
