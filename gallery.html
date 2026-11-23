@@ -91,9 +91,16 @@
             font-size: 12px;
             font-weight: 600;
         }
+        .gallery-layout {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
         .gallery-grid {
+            flex: 1 1 auto;
+            min-width: 0;
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             grid-auto-rows: 120px;
             grid-auto-flow: dense;
             gap: 16px;
@@ -116,7 +123,7 @@
         .gallery-card:nth-child(3) { grid-column: span 1; grid-row: span 1; }
         .gallery-card:nth-child(4) { grid-column: span 1; grid-row: span 1; }
         .gallery-card:nth-child(5) { grid-column: span 2; grid-row: span 2; }
-        .gallery-card:nth-child(6) { grid-column: span 2; grid-row: span 1; }
+        .gallery-card:nth-child(6) { grid-column: span 1; grid-row: span 1; }
         .gallery-card img {
             display: block;
             width: 100%;
@@ -178,6 +185,92 @@
             text-align: center;
         }
         .gallery-note i { color: #c5a059; }
+
+        /* ----- Latest Status Video Card ----- */
+        .video-card {
+            flex: 0 0 250px;
+            background: linear-gradient(160deg, #fff4e0 0%, #ffe6cc 55%, #ffd7b5 100%);
+            border: 2px dashed #e8a33d;
+            border-radius: 20px;
+            padding: 16px;
+            box-shadow: 0 10px 26px rgba(197, 120, 30, 0.18);
+            position: sticky;
+            top: 90px;
+        }
+        .video-head {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .video-head > i {
+            color: #d21f3c;
+            font-size: 30px;
+            line-height: 1;
+            margin-top: 2px;
+        }
+        .video-head h3 {
+            margin: 0;
+            color: #8a2b06;
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .video-head p {
+            margin: 3px 0 0;
+            color: #7a4a1a;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        .video-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #1a1a1a;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+        }
+        .video-frame video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .video-frame .play-badge {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .video-frame.playing .play-badge { opacity: 0; }
+        .video-frame .play-badge span {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            display: grid;
+            place-items: center;
+            color: #d21f3c;
+            font-size: 26px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+            transition: transform 0.25s;
+        }
+        .video-frame:hover .play-badge span { transform: scale(1.08); }
+        .video-duration {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            padding: 3px 9px;
+            border-radius: 6px;
+            background: rgba(0, 0, 0, 0.72);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
         .gallery-lightbox {
             position: fixed;
             z-index: 2000;
@@ -234,6 +327,14 @@
         .lightbox-next { top: 50%; right: 20px; transform: translateY(-50%); }
         body.lightbox-open { overflow: hidden; }
         @media (max-width: 850px) {
+            .gallery-layout { flex-direction: column; }
+            .video-card {
+                flex: 0 0 auto;
+                width: 100%;
+                max-width: 320px;
+                margin: 0 auto;
+                position: static;
+            }
             .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 125px; gap: 13px; }
             .gallery-card:nth-child(1) { grid-column: span 1; grid-row: span 2; }
             .gallery-card:nth-child(2) { grid-column: span 1; grid-row: span 2; }
@@ -276,9 +377,10 @@
                     <h2>Memories &amp; Moments</h2>
                     <p>Tap any photo to view it larger.</p>
                 </div>
-                <span class="gallery-count"><i class="fas fa-images"></i> 11 Photos</span>
+                <span class="gallery-count"><i class="fas fa-images"></i> 11 Photos &nbsp;·&nbsp; <i class="fas fa-video"></i> 1 Video</span>
             </div>
 
+            <div class="gallery-layout">
             <div class="gallery-grid" id="galleryGrid">
                 <button class="gallery-card" type="button" data-caption="Together through music">
                     <img src="images/gall/img1.PNG" alt="Anandha Vruksham community moment" loading="lazy">
@@ -325,6 +427,24 @@
                     <img src="images/gall/img11.PNG" alt="A moment from our musical journey" loading="lazy">
                     <span class="gallery-caption"><span>Our musical journey</span><i class="fas fa-expand"></i></span>
                 </button>
+            </div>
+
+            <aside class="video-card">
+                <div class="video-head">
+                    <i class="fas fa-play-circle"></i>
+                    <div>
+                        <h3>Latest Status Video</h3>
+                        <p>Watch our latest moments in a short video.</p>
+                    </div>
+                </div>
+                <div class="video-frame" id="videoFrame">
+                    <video id="statusVideo" poster="images/gall/img5.PNG" playsinline preload="metadata">
+                        <source src="vdo/chess_v.mp4" type="video/mp4">
+                    </video>
+                    <div class="play-badge" id="playBadge"><span><i class="fas fa-play"></i></span></div>
+                    <span class="video-duration">0:30</span>
+                </div>
+            </aside>
             </div>
 
             <p class="gallery-note"><i class="fas fa-heart"></i> Every picture tells a little part of our story.</p>
@@ -405,6 +525,22 @@
                 if (event.key === 'ArrowLeft') showImage(activeIndex - 1);
                 if (event.key === 'ArrowRight') showImage(activeIndex + 1);
             });
+
+            // Status video playback
+            const statusVideo = document.getElementById('statusVideo');
+            const videoFrame = document.getElementById('videoFrame');
+            if (statusVideo && videoFrame) {
+                videoFrame.addEventListener('click', () => {
+                    if (statusVideo.paused) {
+                        statusVideo.play();
+                    } else {
+                        statusVideo.pause();
+                    }
+                });
+                statusVideo.addEventListener('play', () => videoFrame.classList.add('playing'));
+                statusVideo.addEventListener('pause', () => videoFrame.classList.remove('playing'));
+                statusVideo.addEventListener('ended', () => videoFrame.classList.remove('playing'));
+            }
         })();
     </script>
 </body>
