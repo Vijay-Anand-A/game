@@ -40,58 +40,9 @@
 
     <section class="banner-section">
         <img src="images/Kurukshetra_2026.png" alt="Kurukshetra 2026" class="banner-img">
-        <div class="reg-buttons">
-            <div class="reg-btn reg-school disabled" aria-disabled="true">
-                <i class="fas fa-school"></i>
-                <div class="reg-text">
-                    <span class="reg-title">School Registration</span>
-                    <span class="reg-sub">Registration Closed</span>
-                </div>
-                <i class="fas fa-lock reg-arrow"></i>
-            </div>
-            <div class="reg-btn reg-individual disabled" aria-disabled="true">
-                <i class="fas fa-users"></i>
-                <div class="reg-text">
-                    <span class="reg-title">Individual Registration</span>
-                    <span class="reg-sub">Registration Closed</span>
-                </div>
-                <i class="fas fa-lock reg-arrow"></i>
-            </div>
-        </div>
-        <p class="reg-closed-note"><i class="fas fa-circle-info"></i> Registration has been closed. Thank you for your response.</p>
     </section>
 
-    <section class="check-section">
-        <div class="container">
-            <div class="check-layout">
-                <div class="check-card">
-                    <div class="check-head">
-                        <i class="fas fa-magnifying-glass"></i>
-                        <h2>Check Your Registration</h2>
-                    </div>
-                    <p class="check-desc">Already registered? Enter the mobile number you used during registration and click View to download your registration.</p>
-                    <div class="check-form">
-                        <input type="tel" id="checkMobile" inputmode="numeric" placeholder="Enter registered mobile number" maxlength="15">
-                        <button class="check-btn" id="checkBtn"><i class="fas fa-eye"></i> View</button>
-                    </div>
-                    <div class="check-result" id="checkResult"></div>
-                </div>
 
-                <aside class="payment-card" aria-labelledby="paymentTitle">
-                    <div class="payment-head">
-                        <i class="fas fa-lock"></i>
-                        <h2 id="paymentTitle">Pay Registration Fee</h2>
-                    </div>
-                    <p class="payment-desc">Scan this QR code using any UPI app to make your payment.</p>
-                    <img class="payment-qr" src="images/QR.jpeg" alt="UPI payment QR code for sathya94gs@okaxis">
-                    <div class="upi-details">
-                        <span class="upi-label">UPI ID</span>
-                        <strong>sathya94gs@okaxis</strong>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <section class="news-section">
         <div class="container">
@@ -105,23 +56,23 @@
             </div>
             <div class="news-carousel">
                 <div class="news-slides" id="newsSlides">
-                    <div class="news-slide">
+                  <!--  <div class="news-slide">
                         <img src="images/spl21.png" alt="Announcement 1">
-                    </div>
+                    </div>-->
                     <div class="news-slide">
                         <img src="images/nov21.png" alt="Announcement 2">
                     </div>
-                    <div class="news-slide">
+                   <!-- <div class="news-slide">
                         <img src="images/nov14.png" alt="Announcement 3">
-                    </div>
+                    </div>-->
                    <!-- <div class="news-slide">
                         <img src="images/wall1.png" alt="Announcement 3">
                     </div>-->
                 </div>
                 <div class="news-dots" id="newsDots">
-                    <span class="news-dot active" data-slide="0"></span>
+                    <!--  <span class="news-dot active" data-slide="0"></span>-->
                  <span class="news-dot" data-slide="1"></span>
-                     <span class="news-dot" data-slide="2"></span>
+                    <!-- <span class="news-dot" data-slide="2"></span>-->
                 </div>
             </div>
         </div>
@@ -213,234 +164,6 @@
 
     <script src="js/style.js"></script>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDHup4M5P3z-fy9fVRElBx0hutREWZGSAM",
-            authDomain: "anandhavruksham-3aa36.firebaseapp.com",
-            projectId: "anandhavruksham-3aa36",
-            storageBucket: "anandhavruksham-3aa36.firebasestorage.app",
-            messagingSenderId: "604117717957",
-            appId: "1:604117717957:web:3df03ca1c702dba99331ac"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        const mobileInput = document.getElementById('checkMobile');
-        const checkBtn = document.getElementById('checkBtn');
-        const checkResult = document.getElementById('checkResult');
-
-        const digitsOnly = (value) => (value == null ? '' : String(value)).replace(/\D/g, '');
-        const last10 = (value) => {
-            const d = digitsOnly(value);
-            return d.length > 10 ? d.slice(-10) : d;
-        };
-        const escapeHtml = (text) => {
-            const div = document.createElement('div');
-            div.textContent = text == null ? '' : String(text);
-            return div.innerHTML;
-        };
-
-        function setResult(type, message) {
-            checkResult.className = 'check-result ' + type;
-            checkResult.textContent = message;
-        }
-
-        const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-        function toDate(value) {
-            if (!value) return null;
-            if (typeof value.toDate === 'function') return value.toDate();
-            if (typeof value.seconds === 'number') return new Date(value.seconds * 1000);
-            if (typeof value === 'string' || typeof value === 'number') {
-                const parsed = new Date(value);
-                return isNaN(parsed.getTime()) ? null : parsed;
-            }
-            return null;
-        }
-
-        // ഉദാ: Nov 20 Mon, 11:20 AM
-        function formatRegisteredAt(value) {
-            const date = toDate(value);
-            if (!date) return '';
-            let hours = date.getHours();
-            const minutes = String(date.getMinutes()).padStart(2, '0');
-            const period = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12 || 12;
-            return `${MONTH_NAMES[date.getMonth()]} ${date.getDate()} ${DAY_NAMES[date.getDay()]}, ${hours}:${minutes} ${period}`;
-        }
-
-        function detailRow(label, value) {
-            return `<div class="d-row"><div class="d-lbl">${label}</div><div class="d-val">${escapeHtml(value) || '-'}</div></div>`;
-        }
-
-        function openPrintView(records) {
-            const base = location.href.replace(/[^/]*$/, '');
-            let inner = '';
-
-            records.forEach(reg => {
-                const isIndividual = reg.registrationType === 'individual';
-                inner += '<div class="rec">';
-                inner += `<div class="rec-title">${isIndividual ? 'Individual Registration Form' : 'School Registration Form'}</div>`;
-
-                if (isIndividual) {
-                    const gender = reg.gender ? reg.gender.charAt(0).toUpperCase() + reg.gender.slice(1) : '';
-                    inner += detailRow('Participant Name', reg.participantName);
-                    inner += detailRow('Date of Birth', reg.dob);
-                    inner += detailRow('Age', reg.age);
-                    inner += detailRow('Gender', gender);
-                    inner += detailRow('Class / Grade', reg.classGrade);
-                    inner += detailRow('School Name', reg.schoolName);
-                    inner += detailRow('Category / Group', reg.category);
-                    inner += detailRow('Parent / Guardian Name', reg.parentName);
-                    inner += detailRow('Contact Number', reg.contactNumber);
-                    inner += detailRow('Email', reg.email);
-                    inner += detailRow('Registered On', formatRegisteredAt(reg.createdAt));
-                } else {
-                    const categories = (reg.categories || []).join(', ');
-                    const participants = reg.participants || [];
-                    inner += detailRow('School Name &amp; Address', reg.schoolNameAddress);
-                    inner += detailRow('Category', categories);
-                    inner += detailRow('E-Mail ID of the school', reg.schoolEmail);
-                    inner += detailRow('Name of the Principal', reg.principalName);
-                    inner += detailRow('Contact Number', reg.principalContact);
-                    inner += detailRow('Name of the P.D/P.E.T/ Coach', reg.coachName);
-                    inner += detailRow('Contact Number', reg.coachContact);
-                    inner += detailRow('Registered On', formatRegisteredAt(reg.createdAt));
-
-                    let rows = '';
-                    participants.forEach((p, i) => {
-                        rows += `<tr>
-                            <td>${i + 1}</td>
-                            <td class="left">${escapeHtml(p.name)}</td>
-                            <td>${p.gender === 'Boy' ? '✔' : ''}</td>
-                            <td>${p.gender === 'Girl' ? '✔' : ''}</td>
-                            <td>${escapeHtml(p.classSec)}</td>
-                            <td>${escapeHtml(p.dob)}</td>
-                        </tr>`;
-                    });
-
-                    inner += `<table>
-                        <thead>
-                            <tr>
-                                <th style="width:45px;">Sl.no</th>
-                                <th>Participants Name</th>
-                                <th style="width:55px;">Boy</th>
-                                <th style="width:55px;">Girl</th>
-                                <th style="width:100px;">Class &amp; sec</th>
-                                <th style="width:110px;">DOB</th>
-                            </tr>
-                        </thead>
-                        <tbody>${rows}</tbody>
-                    </table>`;
-                }
-                inner += '</div>';
-            });
-
-            const win = window.open('', '_blank');
-            if (!win) {
-                alert('Please allow pop-ups to view your registration.');
-                return;
-            }
-
-            win.document.write(`<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Registration Details - Kurukshetra 2026</title>
-<style>
-    * { box-sizing: border-box; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 15px; color: #222; }
-    .head { display: flex; justify-content: space-between; align-items: center; }
-    .head img { height: 55px; }
-    .head .mid { flex: 1; text-align: center; }
-    .head .mid img { height: 45px; }
-    .school-info { background: #004d3e; color: #fff; text-align: center; font-size: 11px; padding: 6px; line-height: 1.4; margin-top: 8px; border-radius: 0 0 40% 40% / 0 0 30% 30%; }
-    .rec { margin-top: 18px; }
-    .rec-title { background: #004d3e; color: #fff; display: inline-block; padding: 5px 22px; border-radius: 8px; font-size: 14px; font-weight: bold; border: 2px solid #c5a059; margin-bottom: 10px; }
-    .d-row { display: flex; margin-bottom: 6px; font-size: 12.5px; align-items: flex-start; }
-    .d-lbl { width: 220px; font-weight: 600; }
-    .d-val { flex: 1; border-bottom: 1px solid #bbb; padding-bottom: 2px; min-height: 18px; }
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-    th, td { border: 1px solid #004d3e; padding: 5px 6px; font-size: 12px; text-align: center; }
-    th { background: #004d3e; color: #fff; }
-    td.left { text-align: left; }
-    .actions { text-align: center; margin: 20px 0; }
-    .actions button { background: #004d3e; color: #fff; border: none; padding: 10px 24px; border-radius: 25px; font-size: 14px; font-weight: bold; cursor: pointer; }
-    @page { size: A4; margin: 10mm; }
-    @media print {
-        .actions { display: none; }
-        th, .school-info, .rec-title { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-        .rec { page-break-inside: avoid; }
-    }
-</style>
-</head>
-<body>
-    <div class="head">
-        <img src="${base}images/logo.png" alt="Logo">
-        <div class="mid"><img src="${base}chess/img/kurushetra.png" alt="Kurukshetra"></div>
-        <img src="${base}chess/img/chess_tour_logo.png" alt="Chess Tournament">
-    </div>
-    <div class="school-info">
-        <div>Dr. Radhakrishnan Street, Tirutani - 631209. Thiruvallur Dist., Tamilnadu.</div>
-        <div>www.anandhavruksham.org | E-mail: anandhavruksham.music@gmail.com | Ph: 9962999106, 9500495449</div>
-    </div>
-    ${inner}
-    <div class="actions"><button onclick="window.print()">🖨 Print / Save as PDF</button></div>
-</body>
-</html>`);
-            win.document.close();
-            win.focus();
-        }
-
-        async function checkRegistration() {
-            const number = last10(mobileInput.value);
-            if (number.length !== 10) {
-                setResult('error', 'Please enter a valid 10-digit mobile number.');
-                return;
-            }
-
-            const originalBtn = checkBtn.innerHTML;
-            checkBtn.disabled = true;
-            checkBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
-            setResult('info', 'Checking your registration...');
-
-            try {
-                const snap = await getDocs(collection(db, 'game_reg'));
-                const matched = [];
-                snap.forEach(d => {
-                    const reg = { id: d.id, ...d.data() };
-                    const isIndividual = reg.registrationType === 'individual';
-                    const numbers = isIndividual
-                        ? [reg.contactNumber]
-                        : [reg.coachContact, reg.principalContact];
-                    if (numbers.some(n => last10(n) === number)) matched.push(reg);
-                });
-
-                if (matched.length === 0) {
-                    setResult('error', 'This number has not registered yet.');
-                    return;
-                }
-
-                setResult('success', `Registration found (${matched.length}). Opening your registration...`);
-                openPrintView(matched);
-            } catch (error) {
-                console.error('Error checking registration:', error);
-                setResult('error', 'Something went wrong. Please try again later.');
-            } finally {
-                checkBtn.disabled = false;
-                checkBtn.innerHTML = originalBtn;
-            }
-        }
-
-        checkBtn.addEventListener('click', checkRegistration);
-        mobileInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') checkRegistration();
-        });
-    </script>
 </body>
 </html>
