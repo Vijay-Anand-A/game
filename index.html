@@ -14,12 +14,42 @@
 <body>
     <div id="site-header"></div>
     <script src="js/include-header.js"></script>
+<style>
+    .deepam-title {
+    font-family: 'Berkshire Swash', cursive;
+    font-size: 55px;
+    font-weight: normal;
+    line-height: 1.05;
+    text-align: center;
+    color: #ffd75e;
 
+    background: linear-gradient(
+        180deg,
+        #fff5a6 0%,
+        #ffd54a 35%,
+        #e99b00 70%,
+        #fff0a0 100%
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    filter: drop-shadow(2px 3px 2px #4b1600);
+    text-shadow: 0 0 12px rgba(255, 190, 30, 0.5);
+}
+
+.deepam-title .highlight {
+    display: inline-block;
+    font-size: 1.05em;
+}
+</style>
     <section id="home" class="hero">
         <div class="container hero-container">
             <div class="hero-content">
                 <span class="music-note-icon"><i class="fas fa-music"></i></span>
-                <h1>Karthigai <br><span class="highlight">Deepam</span></h1>
+                <!--<h1>Karthigai <br><span class="highlight">Deepam</span></h1>-->
+                <h1 class="deepam-title">Karthigai <br><span class="highlight">Deepam</span>
+</h1>
                 <div class="hero-subtitle">
                     <span class="dash"></span>
                     <h2>Learn. Practice. Perform.</h2>
