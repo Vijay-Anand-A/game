@@ -10,6 +10,91 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ----- Latest Video Section ----- */
+        .video-section {
+            padding: 20px 0 70px;
+            background-color: #fff;
+        }
+        .video-wrap {
+            display: flex;
+            justify-content: center;
+        }
+        .video-card {
+            flex: 0 0 250px;
+            background: linear-gradient(160deg, #fff4e0 0%, #ffe6cc 55%, #ffd7b5 100%);
+            border: 2px dashed #e8a33d;
+            border-radius: 20px;
+            padding: 16px;
+            box-shadow: 0 10px 26px rgba(197, 120, 30, 0.18);
+        }
+        .video-head {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .video-head > i {
+            color: #d21f3c;
+            font-size: 30px;
+            line-height: 1;
+            margin-top: 2px;
+        }
+        .video-head h3 {
+            margin: 0;
+            color: #8a2b06;
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .video-head p {
+            margin: 3px 0 0;
+            color: #7a4a1a;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        .video-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #1a1a1a;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+        }
+        .video-frame video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .video-frame .play-badge {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .video-frame.playing .play-badge { opacity: 0; }
+        .video-frame .play-badge span {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            display: grid;
+            place-items: center;
+            color: #d21f3c;
+            font-size: 26px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+            transition: transform 0.25s;
+        }
+        .video-frame:hover .play-badge span { transform: scale(1.08); }
+        @media (max-width: 768px) {
+            .video-section { padding: 10px 0 50px; }
+            .video-card { flex: 0 0 auto; width: 100%; max-width: 300px; }
+        }
+    </style>
 </head>
 <body>
     <div id="site-header"></div>
@@ -40,6 +125,33 @@
 
     <section class="banner-section">
         <img src="images/Kurukshetra_2026.png" alt="Kurukshetra 2026" class="banner-img">
+    </section>
+
+    <section class="video-section">
+        <div class="container">
+            <div class="section-title">
+                <span class="music-icon-small"><i class="fas fa-music"></i></span>
+                <h2>Latest Video</h2>
+                <span class="music-icon-small"><i class="fas fa-music"></i></span>
+            </div>
+            <div class="video-wrap">
+                <aside class="video-card">
+                    <div class="video-head">
+                        <i class="fas fa-play-circle"></i>
+                        <div>
+                            <h3>Latest Video</h3>
+                            <p>Successfully completed the Kurukshetra 2026 chess tournament.</p>
+                        </div>
+                    </div>
+                    <div class="video-frame" id="videoFrame">
+                        <video id="statusVideo" poster="images/cmpt.png" playsinline preload="metadata">
+                            <source src="vdo/chess_new.mp4" type="video/mp4">
+                        </video>
+                        <div class="play-badge" id="playBadge"><span><i class="fas fa-play"></i></span></div>
+                    </div>
+                </aside>
+            </div>
+        </div>
     </section>
 
 
@@ -163,7 +275,23 @@
     </footer>
 
     <script src="js/style.js"></script>
-
+    <script>
+        // Latest video playback
+        const statusVideo = document.getElementById('statusVideo');
+        const videoFrame = document.getElementById('videoFrame');
+        if (statusVideo && videoFrame) {
+            videoFrame.addEventListener('click', () => {
+                if (statusVideo.paused) {
+                    statusVideo.play();
+                } else {
+                    statusVideo.pause();
+                }
+            });
+            statusVideo.addEventListener('play', () => videoFrame.classList.add('playing'));
+            statusVideo.addEventListener('pause', () => videoFrame.classList.remove('playing'));
+            statusVideo.addEventListener('ended', () => videoFrame.classList.remove('playing'));
+        }
+    </script>
 
 </body>
 </html>
