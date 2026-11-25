@@ -162,6 +162,7 @@ nav {
 .hero-image {
     flex: 1;
     position: relative;
+    top: 48px;
 }
 
 .hero-image img {
